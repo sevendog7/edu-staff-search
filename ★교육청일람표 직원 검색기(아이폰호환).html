@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- iPhone Safari 호환성을 위한 viewport 수정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>광주광역시교육청 직원 검색</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+        }
+        /* 스크롤바 스타일링 (데스크톱 브라우저용) */
+        /* 참고: iOS Safari에서는 이 스타일이 적용되지 않으며, 기본 스크롤바가 사용됩니다. */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+        /* iOS에서 부드러운 스크롤링(관성 스크롤)을 위한 속성 */
+        .custom-scrollbar {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 활성 탭(링크) 스타일 */
+        .tab-active {
+            border-color: #3b82f6;
+            background-color: #3b82f6;
+            color: white;
+        }
+        .group-section {
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-blue-800">광주광역시교육청 직원 검색(2025.7.1. 직원일람표 기준)</h1>
+            <p class="text-gray-600 mt-2">[2025.7.7. STmade] 이름으로 직원을 검색(1글자 이상 입력)하거나 그룹을 선택하여 명단을 확인하세요. 휴대전화에서 전화번호를 터치하면 통화로 연결됩니다.</p>
+        </header>
+
+        <!-- 바탕화면 바로가기 안내 -->
+        <div class="space-y-6 mb-8">
+            <!-- 아이폰용 안내 -->
+            <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-800 p-4 rounded-lg shadow-sm">
+                <p class="font-bold">📱 아이폰 바탕화면에 바로가기 만들기</p>
+                <ol class="list-decimal list-inside mt-2 text-sm space-y-1">
+                    <li>이 HTML 파일을 <strong>'파일'</strong> 앱에 저장합니다.</li>
+                    <li>Safari(사파리) 브라우저를 열고, 주소창에 <strong>file:///</strong> 을 입력 후 이동합니다.</li>
+                    <li>저장된 HTML 파일(<strong>★교육청일람표 직원 검색기.html</strong>)을 찾아 실행합니다.</li>
+                    <li>하단의 <strong>'공유'</strong> 아이콘(상자 위 화살표 모양)을 탭합니다.</li>
+                    <li>메뉴에서 <strong>'홈 화면에 추가'</strong>를 선택하면 완료됩니다.</li>
+                </ol>
+            </div>
+            <!-- 안드로이드용 안내 -->
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-lg shadow-sm">
+                <p class="font-bold">💡 안드로이드 바탕화면에 바로가기 만들기 (삼성폰 기준)</p>
+                <ol class="list-decimal list-inside mt-2 text-sm space-y-1">
+                    <li>이 HTML 파일을 휴대전화에 다운로드합니다.</li>
+                    <li><strong>'내 파일'</strong> 앱 실행 → <strong>'다운로드'</strong> 카테고리 선택</li>
+                    <li>(카카오톡으로 받았다면 <strong>'Download > KaKaoTalk'</strong> 폴더로 이동)</li>
+                    <li>다운로드한 파일(<strong>★교육청일람표 직원 검색기.html</strong>)을 길게 누릅니다.</li>
+                    <li>우측 하단 <strong>'더보기(점 3개)'</strong> 메뉴 선택 → <strong>'홈 화면에 추가'</strong>를 선택하면 완료됩니다.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- 이름으로 검색 섹션 -->
+        <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">이름으로 검색</h2>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <input type="text" id="searchInput" placeholder="직원 이름을 입력하세요..." class="flex-grow w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <!-- 버튼 타입을 명시적으로 'button'으로 설정 -->
+                <button id="searchButton" type="button" class="w-full sm:w-auto bg-blue-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-md">검색</button>
+            </div>
+            <div id="searchResults" class="mt-6">
+                <!-- 검색 결과가 여기에 표시됩니다. -->
+            </div>
+        </div>
+
+        <!-- 그룹별로 보기 섹션 -->
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">그룹별로 보기</h2>
+            
+            <!-- 그룹 선택 탭 -->
+            <div class="border-b border-gray-200">
+                <nav id="groupTabs" class="-mb-px flex space-x-4 overflow-x-auto custom-scrollbar pb-2">
+                    <!-- 그룹 탭이 여기에 동적으로 생성됩니다. -->
+                </nav>
+            </div>
+
+            <!-- 직원 목록 -->
+            <div id="groupContent" class="mt-6 space-y-10">
+                <!-- 각 그룹의 콘텐츠가 여기에 동적으로 생성됩니다. -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function initializeApp() {
+            // 직원 데이터 구조: { group, team, position, name, phone }
+            const staffData = [
+                // 교육감
+                { group: "교육감", team: "교육감실", position: "교육감 교육감", name: "이정선", phone: "" },
+                { group: "교육감", team: "교육감실", position: "부속실 비서실장", name: "장상석", phone: "4650" },
+                { group: "교육감", team: "교육감실", position: "부속실 비서관", name: "김재선", phone: "4671" },
+                { group: "교육감", team: "교육감실", position: "부속실 주무관", name: "공훈", phone: "4203" },
+                { group: "교육감", team: "교육감실", position: "부속실 주무관", name: "김인규", phone: "4670" },
+                { group: "교육감", team: "교육감실", position: "부속실 주무관", name: "조선훈", phone: "4523" },
+                { group: "교육감", team: "교육감실", position: "부속실 주무관", name: "이현진", phone: "4202" },
+                { group: "교육감", team: "교육감실", position: "부속실 주무관", name: "박윤송", phone: "4201" },
+                { group: "교육감", team: "공보담당관", position: "공보담당관 과장", name: "한장석", phone: "4450" },
+                { group: "교육감", team: "공보담당관", position: "공보 사무관", name: "최기영", phone: "4411" },
+                { group: "교육감", team: "공보담당관", position: "공보 주무관", name: "정문영", phone: "4412" },
+                { group: "교육감", team: "공보담당관", position: "공보 주무관", name: "김경은", phone: "4413" },
+                { group: "교육감", team: "공보담당관", position: "공보 주무관", name: "추인엽", phone: "4414" },
+                { group: "교육감", team: "공보담당관", position: "공보 주무관", name: "함동현", phone: "4415" },
+                { group: "교육감", team: "공보담당관", position: "홍보기획 장학관", name: "국광윤", phone: "4451" },
+                { group: "교육감", team: "공보담당관", position: "홍보기획 주무관", name: "조인범", phone: "4452" },
+                { group: "교육감", team: "공보담당관", position: "홍보기획 주무관", name: "신대수", phone: "4453" },
+                { group: "교육감", team: "공보담당관", position: "홍보기획 주무관", name: "배정현", phone: "4455" },
+                { group: "교육감", team: "공보담당관", position: "홍보기획 주무관", name: "염승호", phone: "4417" },
+                { group: "교육감", team: "공보담당관", position: "홍보기획 주무관", name: "박시현", phone: "4418" },
+
+                // 부교육감
+                { group: "부교육감", team: "부교육감실", position: "부교육감 부교육감", name: "최승복", phone: "4204" },
+                { group: "부교육감", team: "부교육감실", position: "부속실 주무관", name: "김승철", phone: "4204" },
+                { group: "부교육감", team: "부교육감실", position: "부속실 주무관", name: "최은비", phone: "4205" },
+                { group: "부교육감", team: "감사관", position: "감사관 감사관", name: "김영래", phone: "4210" },
+                { group: "부교육감", team: "감사관", position: "청렴총괄 서기관", name: "송정란", phone: "4211" },
+                { group: "부교육감", team: "감사관", position: "청렴총괄 주무관", name: "송가연", phone: "4212" },
+                { group: "부교육감", team: "감사관", position: "청렴총괄 주무관", name: "김은정", phone: "4213" },
+                { group: "부교육감", team: "감사관", position: "청렴총괄 주무관", name: "이민애", phone: "4214" },
+                { group: "부교육감", team: "감사관", position: "청렴총괄 주무관", name: "이자민", phone: "4215" },
+                { group: "부교육감", team: "감사관", position: "행정감사 사무관", name: "기윤", phone: "4221" },
+                { group: "부교육감", team: "감사관", position: "행정감사 주무관", name: "강우진", phone: "4222" },
+                { group: "부교육감", team: "감사관", position: "행정감사 주무관", name: "정선효", phone: "4223" },
+                { group: "부교육감", team: "감사관", position: "행정감사 주무관", name: "염지승", phone: "4224" },
+                { group: "부교육감", team: "감사관", position: "행정감사 주무관", name: "조호선", phone: "4225" },
+                { group: "부교육감", team: "감사관", position: "행정감사 주무관", name: "김가영", phone: "4226" },
+                { group: "부교육감", team: "감사관", position: "교무감사 장학관", name: "김운곤", phone: "4231" },
+                { group: "부교육감", team: "감사관", position: "교무감사 장학사", name: "이상희", phone: "4232" },
+                { group: "부교육감", team: "감사관", position: "교무감사 주무관", name: "서명우", phone: "4233" },
+                { group: "부교육감", team: "감사관", position: "교무감사 주무관", name: "서민경", phone: "4234" },
+                { group: "부교육감", team: "감사관", position: "교무감사 주무관", name: "고결", phone: "4235" },
+                { group: "부교육감", team: "감사관", position: "공익감사 사무관", name: "유영현", phone: "4021" },
+                { group: "부교육감", team: "감사관", position: "공익감사 주무관", name: "한기준", phone: "4022" },
+                { group: "부교육감", team: "감사관", position: "공익감사 주무관", name: "전여정", phone: "4023" },
+                { group: "부교육감", team: "감사관", position: "공익감사 주무관", name: "노영진", phone: "4024" },
+                { group: "부교육감", team: "감사관", position: "공익감사 주무관", name: "이영택", phone: "4025" },
+                { group: "부교육감", team: "감사관", position: "공익감사 주무관", name: "김아원", phone: "4026" },
+
+                // 정책국
+                { group: "정책국", team: "정책국장", position: "정책국장 국장", name: "고인자", phone: "4802" },
+                { group: "정책국", team: "정책국장", position: "부속실 주무관", name: "정희선", phone: "4802" },
+                { group: "정책국", team: "미래교육기획과", position: "과장 과장", name: "최성광", phone: "4250" },
+                { group: "정책국", team: "미래교육기획과", position: "정책기획 장학관", name: "김보영", phone: "4241" },
+                { group: "정책국", team: "미래교육기획과", position: "정책기획 장학사", name: "이경수", phone: "4242" },
+                { group: "정책국", team: "미래교육기획과", position: "정책기획 장학사", name: "전령", phone: "4243" },
+                { group: "정책국", team: "미래교육기획과", position: "정책기획 주무관", name: "김정호", phone: "4244" },
+                { group: "정책국", team: "미래교육기획과", position: "정책기획 주무관", name: "김다빈", phone: "4245" },
+                { group: "정책국", team: "미래교육기획과", position: "기획조정 장학관", name: "장석준", phone: "4246" },
+                { group: "정책국", team: "미래교육기획과", position: "기획조정 장학사", name: "유현석", phone: "4247" },
+                { group: "정책국", team: "미래교육기획과", position: "기획조정 장학사", name: "이선임", phone: "4248" },
+                { group: "정책국", team: "미래교육기획과", position: "기획조정 주무관", name: "양훈열", phone: "4249" },
+                { group: "정책국", team: "미래교육기획과", position: "기획조정 주무관", name: "송재환", phone: "4589" },
+                { group: "정책국", team: "미래교육기획과", position: "미래융합교육 장학관", name: "김아진", phone: "4501" },
+                { group: "정책국", team: "미래교육기획과", position: "미래융합교육 장학사", name: "김수영", phone: "4502" },
+                { group: "정책국", team: "미래교육기획과", position: "미래융합교육 주무관", name: "이강길", phone: "4505" },
+                { group: "정책국", team: "미래교육기획과", position: "미래융합교육 주무관", name: "이동수", phone: "4503" },
+                { group: "정책국", team: "미래교육기획과", position: "미래융합교육 주무관", name: "고윤미", phone: "4504" },
+                { group: "정책국", team: "미래교육기획과", position: "미래융합교육 주무관", name: "남인혜", phone: "4587" },
+                { group: "정책국", team: "미래교육기획과", position: "미래융합교육 주무관", name: "이유리", phone: "4506" },
+                { group: "정책국", team: "미래교육기획과", position: "교육정보화 사무관", name: "한명희", phone: "4541" },
+                { group: "정책국", team: "미래교육기획과", position: "교육정보화 주무관", name: "신경헌", phone: "4542" },
+                { group: "정책국", team: "미래교육기획과", position: "교육정보화 주무관", name: "배명진", phone: "4544" },
+                { group: "정책국", team: "미래교육기획과", position: "교육정보화 주무관", name: "백창범", phone: "4543" },
+                { group: "정책국", team: "미래교육기획과", position: "교육정보화 주무관", name: "윤지유", phone: "4546" },
+                { group: "정책국", team: "미래교육기획과", position: "교육정보화 주무관", name: "김현주", phone: "4545" },
+                { group: "정책국", team: "미래교육기획과", position: "교육정보화 주무관", name: "정은지", phone: "4548" },
+                { group: "정책국", team: "미래교육기획과", position: "교육정보화 주무관", name: "정성오", phone: "4547" },
+                { group: "정책국", team: "미래교육기획과", position: "사학정책 사무관", name: "김진영", phone: "4251" },
+                { group: "정책국", team: "미래교육기획과", position: "사학정책 장학사", name: "주진웅", phone: "4252" },
+                { group: "정책국", team: "미래교육기획과", position: "사학정책 장학사", name: "김병섭", phone: "4253" },
+                { group: "정책국", team: "미래교육기획과", position: "사학정책 주무관", name: "김현근", phone: "4254" },
+                { group: "정책국", team: "미래교육기획과", position: "사학정책 주무관", name: "정두희", phone: "4255" },
+                { group: "정책국", team: "미래교육기획과", position: "사학정책 주무관", name: "서믿음", phone: "4256" },
+                { group: "정책국", team: "미래교육기획과", position: "정책평가 사무관", name: "양계숙", phone: "4261" },
+                { group: "정책국", team: "미래교육기획과", position: "정책평가 주무관", name: "박희주", phone: "4262" },
+                { group: "정책국", team: "미래교육기획과", position: "정책평가 주무관", name: "권성택", phone: "4263" },
+                { group: "정책국", team: "미래교육기획과", position: "정책평가 주무관", name: "심동원", phone: "4264" },
+                { group: "정책국", team: "미래교육기획과", position: "정책평가 주무관", name: "배아영", phone: "4265" },
+                { group: "정책국", team: "세계민주시민교육과", position: "과장 과장", name: "김치곤", phone: "4360" },
+                { group: "정책국", team: "세계민주시민교육과", position: "국제교육 장학관", name: "임동연", phone: "4366" },
+                { group: "정책국", team: "세계민주시민교육과", position: "국제교육 장학사", name: "기현아", phone: "4367" },
+                { group: "정책국", team: "세계민주시민교육과", position: "국제교육 장학사", name: "박경화", phone: "4368" },
+                { group: "정책국", team: "세계민주시민교육과", position: "국제교육 주무관", name: "윤미리", phone: "4465" },
+                { group: "정책국", team: "세계민주시민교육과", position: "국제교육 주무관", name: "정지수", phone: "4466" },
+                { group: "정책국", team: "세계민주시민교육과", position: "국제교육 행정실무사", name: "서설영", phone: "4464" },
+                { group: "정책국", team: "세계민주시민교육과", position: "국제교육 원어민보조교사", name: "William Stone", phone: "4369" },
+                { group: "정책국", team: "세계민주시민교육과", position: "민주시민교육 장학관", name: "임선희", phone: "4591" },
+                { group: "정책국", team: "세계민주시민교육과", position: "민주시민교육 사무관", name: "임태경", phone: "4079" },
+                { group: "정책국", team: "세계민주시민교육과", position: "민주시민교육 장학사", name: "선연택", phone: "4593" },
+                { group: "정책국", team: "세계민주시민교육과", position: "민주시민교육 장학사", name: "이립", phone: "4592" },
+                { group: "정책국", team: "세계민주시민교육과", position: "민주시민교육 장학사", name: "유명진", phone: "4598" },
+                { group: "정책국", team: "세계민주시민교육과", position: "민주시민교육 주무관", name: "김선숙", phone: "4594" },
+                { group: "정책국", team: "세계민주시민교육과", position: "민주시민교육 주무관", name: "김양홍", phone: "4463" },
+                { group: "정책국", team: "세계민주시민교육과", position: "민주시민교육 전문인력", name: "김점숙", phone: "4596" },
+                { group: "정책국", team: "세계민주시민교육과", position: "민주시민교육 전문인력", name: "박수희", phone: "4597" },
+                { group: "정책국", team: "세계민주시민교육과", position: "학교자치 사무관", name: "장소영", phone: "4361" },
+                { group: "정책국", team: "세계민주시민교육과", position: "학교자치 장학사", name: "박민우", phone: "4362" },
+                { group: "정책국", team: "세계민주시민교육과", position: "학교자치 주무관", name: "박경천", phone: "4363" },
+                { group: "정책국", team: "세계민주시민교육과", position: "학교자치 주무관", name: "박정화", phone: "4365" },
+                { group: "정책국", team: "세계민주시민교육과", position: "학교자치 주무관", name: "김미양", phone: "4078" },
+                { group: "정책국", team: "세계민주시민교육과", position: "학교자치 주무관", name: "송현주", phone: "4364" },
+                { group: "정책국", team: "노동정책과", position: "과장 과장", name: "박래진", phone: "4840" },
+                { group: "정책국", team: "노동정책과", position: "노사협력 사무관", name: "류형수", phone: "4841" },
+                { group: "정책국", team: "노동정책과", position: "노사협력 주무관", name: "나영수", phone: "4842" },
+                { group: "정책국", team: "노동정책과", position: "노사협력 주무관", name: "김희주", phone: "4843" },
+                { group: "정책국", team: "노동정책과", position: "노사협력 주무관", name: "양혜영", phone: "4844" },
+                { group: "정책국", team: "노동정책과", position: "공무직인사 사무관", name: "이진욱", phone: "4851" },
+                { group: "정책국", team: "노동정책과", position: "공무직인사 주무관", name: "전철흥", phone: "4852" },
+                { group: "정책국", team: "노동정책과", position: "공무직인사 주무관", name: "김유진", phone: "4853" },
+                { group: "정책국", team: "노동정책과", position: "공무직인사 주무관", name: "고정은", phone: "4854" },
+                { group: "정책국", team: "노동정책과", position: "공무직인사 주무관", name: "최지예", phone: "4855" },
+                { group: "정책국", team: "노동정책과", position: "공무직노무 사무관", name: "강덕훈", phone: "4861" },
+                { group: "정책국", team: "노동정책과", position: "공무직노무 주무관", name: "한현자", phone: "4862" },
+                { group: "정책국", team: "노동정책과", position: "공무직노무 노무사", name: "홍관희", phone: "4863" },
+                { group: "정책국", team: "노동정책과", position: "공무직노무 주무관", name: "양선희", phone: "4864" },
+                { group: "정책국", team: "노동정책과", position: "공무직노무 주무관", name: "송지은", phone: "4865" },
+                { group: "정책국", team: "안전총괄과", position: "과장 과장", name: "허승", phone: "4870" },
+                { group: "정책국", team: "안전총괄과", position: "안전기획 사무관", name: "최석주", phone: "4871" },
+                { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "임창섭", phone: "4872" },
+                { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "노지은", phone: "4873" },
+                { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "최준민", phone: "4874" },
+                { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "봉준열", phone: "4875, 4119" },
+                { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "박건희", phone: "4876" },
+                { group: "정책국", team: "안전총괄과", position: "교육환경 사무관", name: "이은양", phone: "4881" },
+                { group: "정책국", team: "안전총괄과", position: "교육환경 주무관", name: "주형례", phone: "4882" },
+                { group: "정책국", team: "안전총괄과", position: "교육환경 주무관", name: "이미정", phone: "4885" },
+                { group: "정책국", team: "안전총괄과", position: "교육환경 주무관", name: "강은비", phone: "4884" },
+                { group: "정책국", team: "안전총괄과", position: "교육환경 주무관", name: "정건영", phone: "4883" },
+                { group: "정책국", team: "안전총괄과", position: "산업재해예방 사무관", name: "박옥희", phone: "4886" },
+                { group: "정책국", team: "안전총괄과", position: "산업재해예방 주무관", name: "박미경", phone: "4877" },
+                { group: "정책국", team: "안전총괄과", position: "산업재해예방 주무관", name: "김형도", phone: "4878" },
+                { group: "정책국", team: "안전총괄과", position: "산업재해예방 주무관", name: "김채린", phone: "4879" },
+                { group: "정책국", team: "안전총괄과", position: "산업재해예방 안전관리자", name: "정정훈", phone: "4887" },
+                { group: "정책국", team: "안전총괄과", position: "산업재해예방 안전관리자", name: "김승범", phone: "4888" },
+                { group: "정책국", team: "안전총괄과", position: "산업재해예방 보건관리자", name: "임다연", phone: "4889" },
+                { group: "정책국", team: "안전총괄과", position: "산업재해예방 보건관리자", name: "임소희", phone: "4890" },
+                { group: "정책국", team: "안전총괄과", position: "안전진단 사무관", name: "장태원", phone: "4291" },
+                { group: "정책국", team: "안전총괄과", position: "안전진단 주무관", name: "정종영", phone: "4292" },
+                { group: "정책국", team: "안전총괄과", position: "안전진단 주무관", name: "이정현", phone: "4293" },
+                { group: "정책국", team: "안전총괄과", position: "안전진단 주무관", name: "김우성", phone: "4295" },
+                { group: "정책국", team: "안전총괄과", position: "안전진단 주무관", name: "이준성", phone: "4294" },
+                { group: "정책국", team: "안전총괄과", position: "비상대비 전문경력관", name: "이은직", phone: "4100" },
+                { group: "정책국", team: "안전총괄과", position: "비상대비 주무관", name: "김철수", phone: "376-0727" },
+                { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "이지선", phone: "380-4158" },
+                { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "윤정", phone: "380-4279" },
+                { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "강은혜", phone: "380-4277" },
+                { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "김미연", phone: "380-4278" },
+
+                // 교육국
+                { group: "교육국", team: "교육국장", position: "교육국장 국장", name: "백기상", phone: "4206" },
+                { group: "교육국", team: "교육국장", position: "부속실 주무관", name: "이나영", phone: "4206" },
+                { group: "교육국", team: "유초등교육과", position: "과장 과장", name: "오주봉", phone: "4330" },
+                { group: "교육국", team: "유초등교육과", position: "초등교육과정 장학관", name: "김송이", phone: "4341" },
+                { group: "교육국", team: "유초등교육과", position: "초등교육과정 장학사", name: "고주연", phone: "4346" },
+                { group: "교육국", team: "유초등교육과", position: "초등교육과정 장학사", name: "김윤진", phone: "4342" },
+                { group: "교육국", team: "유초등교육과", position: "초등교육과정 장학사", name: "노한종", phone: "4344" },
+                { group: "교육국", team: "유초등교육과", position: "초등교육과정 주무관", name: "김숙진", phone: "4347" },
+                { group: "교육국", team: "유초등교육과", position: "초등교육과정 주무관", name: "박재찬", phone: "4348" },
+                { group: "교육국", team: "유초등교육과", position: "초등교육과정 주무관", name: "이선주", phone: "4343" },
+                { group: "교육국", team: "유초등교육과", position: "초등교육과정 주무관", name: "김인중", phone: "4349" },
+                { group: "교육국", team: "유초등교육과", position: "초등교육과정 행정실무사", name: "오유리", phone: "4345" },
+                { group: "교육국", team: "유초등교육과", position: "초등인사 장학관", name: "임철연", phone: "4331" },
+                { group: "교육국", team: "유초등교육과", position: "초등인사 장학사", name: "조성민", phone: "4332" },
+                { group: "교육국", team: "유초등교육과", position: "초등인사 주무관", name: "김보국", phone: "4334" },
+                { group: "교육국", team: "유초등교육과", position: "초등인사 주무관", name: "이은옥", phone: "4335" },
+                { group: "교육국", team: "유초등교육과", position: "초등인사 주무관", name: "이신애", phone: "4336" },
+                { group: "교육국", team: "유초등교육과", position: "초등인사 주무관", name: "추상옥", phone: "4338" },
+                { group: "교육국", team: "유초등교육과", position: "초등인사 행정실무사", name: "최수정", phone: "4339" },
+                { group: "교육국", team: "유초등교육과", position: "유아교육 장학관", name: "이지영", phone: "4471" },
+                { group: "교육국", team: "유초등교육과", position: "유아교육 장학사", name: "권혜진", phone: "4475" },
+                { group: "교육국", team: "유초등교육과", position: "유아교육 주무관", name: "김향주", phone: "4472" },
+                { group: "교육국", team: "유초등교육과", position: "유아교육 주무관", name: "임경심", phone: "4474" },
+                { group: "교육국", team: "유초등교육과", position: "유아교육 주무관", name: "홍수정", phone: "4476" },
+                { group: "교육국", team: "유초등교육과", position: "방과후학교 사무관", name: "장경화", phone: "4481" },
+                { group: "교육국", team: "유초등교육과", position: "방과후학교 장학사", name: "김준성", phone: "4482" },
+                { group: "교육국", team: "유초등교육과", position: "방과후학교 장학사(인턴)", name: "박명진", phone: "4490" },
+                { group: "교육국", team: "유초등교육과", position: "방과후학교 주무관", name: "위경미", phone: "4479" },
+                { group: "교육국", team: "유초등교육과", position: "방과후학교 주무관", name: "유명희", phone: "4480" },
+                { group: "교육국", team: "유초등교육과", position: "방과후학교 주무관", name: "이현희", phone: "4485" },
+                { group: "교육국", team: "유초등교육과", position: "방과후학교 주무관", name: "신지선", phone: "4484" },
+                { group: "교육국", team: "유초등교육과", position: "방과후학교 주무관", name: "서원호", phone: "4483" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합추진 사무관", name: "임선량", phone: "570-1301" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합추진 장학사", name: "이경민", phone: "570-1307" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합추진 주무관", name: "송미란", phone: "570-1305" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합추진 주무관", name: "이윤지", phone: "570-1302" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합추진 주무관", name: "이정은", phone: "570-1303" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합추진 주무관", name: "고은주", phone: "570-1304" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합추진 주무관", name: "김재아", phone: "570-1309" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합센터 사무관", name: "전주아", phone: "525-2260" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합센터 장학사", name: "이정희", phone: "525-2261" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합센터 주무관", name: "민소식", phone: "525-2263" },
+                { group: "교육국", team: "유초등교육과", position: "유보통합센터 주무관", name: "전정숙", phone: "525-2264" },
+                { group: "교육국", team: "유초등교육과", position: "교사성장마루 장학관", name: "김송이", phone: "525-0370" },
+                { group: "교육국", team: "유초등교육과", position: "교사성장마루 주무관", name: "김인중", phone: "525-0371" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "김경연", phone: "4281" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "김나연", phone: "4281" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "김문혜", phone: "4282" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "김서영", phone: "4282" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "김희은", phone: "4282" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "나이지", phone: "4283" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "나현진", phone: "4283" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "박해인", phone: "4284" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "신수빈", phone: "4284" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "이미리암", phone: "4285" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "이미영", phone: "4285" },
+                { group: "교육국", team: "유초등교육과", position: "유아특수협의실 순회교사", name: "정혜준", phone: "4285" },
+                { group: "교육국", team: "중등특수교육과", position: "과장 과장", name: "김창균", phone: "4300" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교육과정 장학관", name: "정향미", phone: "4301" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교육과정 장학사", name: "김정욱", phone: "4302" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교육과정 장학사", name: "이옥자", phone: "4303" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교육과정 장학사", name: "정소연", phone: "4304" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교육과정 장학사", name: "정지영", phone: "4305" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교육과정 장학사", name: "김성준", phone: "4306" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교육과정 주무관", name: "조현숙", phone: "4307" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교수학습 장학관", name: "최지한", phone: "4601" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교수학습 장학사", name: "박영주", phone: "4602" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교수학습 장학사", name: "조성현", phone: "4603" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교수학습 장학사", name: "박성민", phone: "4604" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교수학습 장학사", name: "이선이", phone: "4606" },
+                { group: "교육국", team: "중등특수교육과", position: "중등교수학습 주무관", name: "양가희", phone: "4607" },
+                { group: "교육국", team: "중등특수교육과", position: "중등인사 장학관", name: "박은성", phone: "4310" },
+                { group: "교육국", team: "중등특수교육과", position: "중등인사 장학사", name: "전지영", phone: "4311" },
+                { group: "교육국", team: "중등특수교육과", position: "중등인사 장학사", name: "정은영", phone: "4313" },
+                { group: "교육국", team: "중등특수교육과", position: "중등인사 장학사", name: "국민진", phone: "4314" },
+                { group: "교육국", team: "중등특수교육과", position: "중등인사 장학사", name: "김학태", phone: "4315" },
+                { group: "교육국", team: "중등특수교육과", position: "중등인사 주무관", name: "정경화", phone: "4316" },
+                { group: "교육국", team: "중등특수교육과", position: "중등인사 행정실무사", name: "서정애", phone: "4318" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 장학관", name: "우치열", phone: "4321" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 장학사", name: "심말옥", phone: "4322" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 장학사", name: "김혜선", phone: "4323" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 장학사", name: "임혜숙", phone: "4324" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 장학사", name: "마준형", phone: "4325" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 특수교사", name: "최예담", phone: "4286" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 특수교사", name: "이양호", phone: "4286" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 특수교사", name: "이영서", phone: "4286" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 특수교사", name: "김평강", phone: "4286" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 특수교사", name: "천소원", phone: "4286" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육 청소보조", name: "서호준", phone: "4326" },
+                { group: "교육국", team: "중등특수교육과", position: "고시 사무관", name: "김민성", phone: "4351" },
+                { group: "교육국", team: "중등특수교육과", position: "고시 주무관", name: "안수란", phone: "4352" },
+                { group: "교육국", team: "중등특수교육과", position: "고시 주무관", name: "김정원", phone: "4353" },
+                { group: "교육국", team: "중등특수교육과", position: "고시 주무관", name: "김윤서", phone: "4354" },
+                { group: "교육국", team: "중등특수교육과", position: "고시 주무관", name: "박규성", phone: "4355" },
+                { group: "교육국", team: "중등특수교육과", position: "고시 행정실무사", name: "김혜진", phone: "4052" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 장학관", name: "우치열", phone: "717-6801" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 장학사", name: "김주향", phone: "717-6803" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 장학사", name: "이형근", phone: "717-6802" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 주무관", name: "김소영", phone: "717-6807" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "김명미", phone: "717-6805" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "박현옥", phone: "717-6804" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "안재철", phone: "717-6806" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "김은선", phone: "717-6808" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "정규호", phone: "717-6809" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "윤혁", phone: "717-6810" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "오인혜", phone: "717-6811" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "김아라", phone: "717-6812" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "박미애", phone: "717-6813" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "김보경", phone: "717-6814" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "박현", phone: "717-6815" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "김민주", phone: "717-6816" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "서은별", phone: "717-6817" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "손지윤", phone: "717-6818" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "신주현", phone: "717-6819" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "이지수", phone: "717-6821" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "김하은", phone: "717-6822" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "이민지", phone: "717-6823" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 특수교사", name: "한채원", phone: "717-6825" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 사회복지사", name: "서매린", phone: "717-6820" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 도서실보조", name: "박동환", phone: "717-6824" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 청소보조", name: "이세인", phone: "717-6826" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 청소보조", name: "김선진", phone: "717-6826" },
+                { group: "교육국", team: "중등특수교육과", position: "특수교육지원센터 미화원", name: "박윤미", phone: "717-6826" },
+                { group: "교육국", team: "진로진학과", position: "과장 과장", name: "형지영", phone: "4810" },
+                { group: "교육국", team: "진로진학과", position: "진학 장학관", name: "정훈탁", phone: "4570" },
+                { group: "교육국", team: "진로진학과", position: "진학 장학사", name: "조정아", phone: "4571" },
+                { group: "교육국", team: "진로진학과", position: "진학 장학사", name: "정용진", phone: "4572" },
+                { group: "교육국", team: "진로진학과", position: "진학 주무관", name: "곽나영", phone: "4333" },
+                { group: "교육국", team: "진로진학과", position: "진학 대입지원관", name: "이혜림", phone: "4836" },
+                { group: "교육국", team: "진로진학과", position: "진학 대입지원관", name: "조정훈", phone: "4838" },
+                { group: "교육국", team: "진로진학과", position: "진학 행정실무사", name: "양정서", phone: "4574" },
+                { group: "교육국", team: "진로진학과", position: "진학 행정실무사", name: "황민정", phone: "4573" },
+                { group: "교육국", team: "진로진학과", position: "직업교육 장학관", name: "은태욱", phone: "4831" },
+                { group: "교육국", team: "진로진학과", position: "직업교육 장학사", name: "문경호", phone: "4833" },
+                { group: "교육국", team: "진로진학과", position: "직업교육 장학사", name: "김비룡", phone: "4832" },
+                { group: "교육국", team: "진로진학과", position: "직업교육 장학사", name: "김신석", phone: "4835" },
+                { group: "교육국", team: "진로진학과", position: "직업교육 주무관", name: "박승리", phone: "4834" },
+                { group: "교육국", team: "진로진학과", position: "진로 장학관", name: "홍기승", phone: "4821" },
+                { group: "교육국", team: "진로진학과", position: "진로 장학사", name: "류수미", phone: "4822" },
+                { group: "교육국", team: "진로진학과", position: "진로 장학사", name: "윤청하", phone: "4823" },
+                { group: "교육국", team: "진로진학과", position: "진로 장학사", name: "안세희", phone: "4824" },
+                { group: "교육국", team: "진로진학과", position: "진로 주무관", name: "이지영", phone: "4825" },
+                { group: "교육국", team: "진로진학과", position: "진로 행정실무사", name: "이수지", phone: "4826" },
+                { group: "교육국", team: "진로진학과", position: "평생교육 사무관", name: "안안순", phone: "4811" },
+                { group: "교육국", team: "진로진학과", position: "평생교육 주무관", name: "허인", phone: "4812" },
+                { group: "교육국", team: "진로진학과", position: "평생교육 주무관", name: "구영미", phone: "4813" },
+                { group: "교육국", team: "진로진학과", position: "평생교육 주무관", name: "윤성찬", phone: "4815" },
+                { group: "교육국", team: "진로진학과", position: "평생교육 주무관", name: "고승희", phone: "4814" },
+                { group: "교육국", team: "진로진학과", position: "평생교육 주무관", name: "김한슬", phone: "4816" },
+                { group: "교육국", team: "진로진학과", position: "평생교육 주무관", name: "김지혜", phone: "4817" },
+                { group: "교육국", team: "진로진학과", position: "취업지원센터 장학사", name: "조동근", phone: "570-2970" },
+                { group: "교육국", team: "진로진학과", position: "취업지원센터 주무관", name: "이규빈", phone: "570-2974" },
+                { group: "교육국", team: "진로진학과", position: "취업지원센터 취업지원관", name: "이선화", phone: "570-2971" },
+                { group: "교육국", team: "진로진학과", position: "취업지원센터 취업지원관", name: "김순희", phone: "570-2973" },
+                { group: "교육국", team: "진로진학과", position: "취업지원센터 취업지원관", name: "김은옥", phone: "570-2976" },
+                { group: "교육국", team: "진로진학과", position: "취업지원센터 취업지원관", name: "고재창", phone: "570-2977" },
+                { group: "교육국", team: "진로진학과", position: "취업지원센터 취업지원관", name: "송원영", phone: "570-2972" },
+                { group: "교육국", team: "진로진학과", position: "취업지원센터 취업지원관", name: "노혜숙", phone: "570-2978" },
+                { group: "교육국", team: "진로진학과", position: "취업지원센터 취업지원관(시청파견)", name: "이윤미", phone: "613-2705" },
+                { group: "교육국", team: "진로진학과", position: "직업교육지원센터 장학사", name: "조동근", phone: "570-2970" },
+                { group: "교육국", team: "진로진학과", position: "직업교육지원센터 파견교사", name: "박상현", phone: "570-2960" },
+                { group: "교육국", team: "진로진학과", position: "직업교육지원센터 파견교사", name: "윤종현", phone: "570-2961" },
+                { group: "교육국", team: "진로진학과", position: "직업교육지원센터 파견교사", name: "강문선", phone: "570-2961" },
+                { group: "교육국", team: "진로진학과", position: "직업교육지원센터 파견교사", name: "나광복", phone: "570-2963" },
+                { group: "교육국", team: "체육건강예술교육과", position: "과장 과장", name: "김필모", phone: "4370" },
+                { group: "교육국", team: "체육건강예술교육과", position: "체육교육 장학관", name: "최진기", phone: "4391" },
+                { group: "교육국", team: "체육건강예술교육과", position: "체육교육 장학사", name: "박재규", phone: "4392" },
+                { group: "교육국", team: "체육건강예술교육과", position: "체육교육 장학사", name: "최미석", phone: "4393" },
+                { group: "교육국", team: "체육건강예술교육과", position: "체육교육 장학사", name: "김성민", phone: "4377" },
+                { group: "교육국", team: "체육건강예술교육과", position: "체육교육 장학사", name: "소대호", phone: "4396" },
+                { group: "교육국", team: "체육건강예술교육과", position: "체육교육 주무관", name: "염수영", phone: "4374" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강 장학관", name: "최진기", phone: "4391" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강 장학사", name: "양선희", phone: "4383" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강 주무관", name: "김동희", phone: "4382" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강 주무관", name: "최민호", phone: "4379" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강 순회보건교사", name: "홍성희", phone: "4385" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강 순회보건교사", name: "김순애", phone: "4386" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강 순회보건교사", name: "박정심", phone: "4397" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강 순회보건교사", name: "김명아", phone: "4399" },
+                { group: "교육국", team: "체육건강예술교육과", position: "문화예술교육 사무관", name: "양정숙", phone: "4371" },
+                { group: "교육국", team: "체육건강예술교육과", position: "문화예술교육 장학사", name: "김유영", phone: "4372" },
+                { group: "교육국", team: "체육건강예술교육과", position: "문화예술교육 장학사", name: "이승남", phone: "4373" },
+                { group: "교육국", team: "체육건강예술교육과", position: "문화예술교육 장학사", name: "정일재", phone: "4387" },
+                { group: "교육국", team: "체육건강예술교육과", position: "문화예술교육 주무관", name: "김규리", phone: "4398" },
+                { group: "교육국", team: "체육건강예술교육과", position: "문화예술교육 행정실무사", name: "양희윤", phone: "4384" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강증진센터 장학관", name: "최진기", phone: "4391" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강증진센터 장학사", name: "양선희", phone: "4383" },
+                { group: "교육국", team: "체육건강예술교육과", position: "학생건강증진센터 주무관", name: "최민호", phone: "4379" },
+                { group: "교육국", team: "체육건강예술교육과", position: "광주학생예술누리터1관 사무관", name: "양정숙", phone: "4371" },
+                { group: "교육국", team: "체육건강예술교육과", position: "광주학생예술누리터1관 주무관", name: "이슬아", phone: "222-7306" },
+                { group: "교육국", team: "체육건강예술교육과", position: "광주학생예술누리터1관 사설관리실무사", name: "이재길", phone: "222-7307" },
+                { group: "교육국", team: "체육건강예술교육과", position: "광주학생예술누리터2관 주무관", name: "이승연", phone: "4375" },
+                { group: "교육국", team: "인성생활교육과", position: "과장 과장", name: "김유신", phone: "570-1320" },
+                { group: "교육국", team: "인성생활교육과", position: "인성생활교육 장학관", name: "김유신", phone: "570-1321" },
+                { group: "교육국", team: "인성생활교육과", position: "인성생활교육 장학사", name: "은준성", phone: "570-1322" },
+                { group: "교육국", team: "인성생활교육과", position: "인성생활교육 장학사", name: "구희남", phone: "570-1323" },
+                { group: "교육국", team: "인성생활교육과", position: "인성생활교육 장학사", name: "선도현", phone: "570-1324" },
+                { group: "교육국", team: "인성생활교육과", position: "인성생활교육 주무관", name: "이초희", phone: "570-1326" },
+                { group: "교육국", team: "인성생활교육과", position: "인성생활교육 주무관", name: "최동오", phone: "570-1327" },
+                { group: "교육국", team: "인성생활교육과", position: "인성생활교육 전문상담사", name: "안옥주", phone: "570-1325" },
+                { group: "교육국", team: "인성생활교육과", position: "마음·사회정서 장학관", name: "안지현", phone: "4080" },
+                { group: "교육국", team: "인성생활교육과", position: "마음·사회정서 장학사", name: "임이화", phone: "4081" },
+                { group: "교육국", team: "인성생활교육과", position: "마음·사회정서 장학사", name: "김수연", phone: "4082" },
+                { group: "교육국", team: "인성생활교육과", position: "마음·사회정서 주무관", name: "김지희", phone: "4085" },
+                { group: "교육국", team: "인성생활교육과", position: "마음·사회정서 주무관", name: "배지훈", phone: "4086" },
+                { group: "교육국", team: "인성생활교육과", position: "마음·사회정서 주무관", name: "추동영", phone: "4087" },
+                { group: "교육국", team: "인성생활교육과", position: "마음·사회정서 주무관", name: "임상아", phone: "4083" },
+                { group: "교육국", team: "인성생활교육과", position: "마음·사회정서 사회복지사", name: "이다솜", phone: "4088" },
+                { group: "교육국", team: "인성생활교육과", position: "마음·사회정서 전문상담사", name: "지미진", phone: "4084" },
+                { group: "교육국", team: "인성생활교육과", position: "교권보호현장지원 장학관", name: "한명희", phone: "570-1331" },
+                { group: "교육국", team: "인성생활교육과", position: "교권보호현장지원 장학사", name: "김수진", phone: "570-1332" },
+                { group: "교육국", team: "인성생활교육과", position: "교권보호현장지원 주무관", name: "장진아", phone: "570-1333" },
+                { group: "교육국", team: "인성생활교육과", position: "대안교육 사무관", name: "유경아", phone: "570-1341" },
+                { group: "교육국", team: "인성생활교육과", position: "대안교육 장학사", name: "진선영", phone: "570-1343" },
+                { group: "교육국", team: "인성생활교육과", position: "대안교육 주무관", name: "기정자", phone: "570-1342" },
+                { group: "교육국", team: "인성생활교육과", position: "대안교육 주무관", name: "주다영", phone: "570-1344" },
+                { group: "교육국", team: "인성생활교육과", position: "대안교육 주무관", name: "문은혜", phone: "570-1345" },
+                { group: "교육국", team: "인성생활교육과", position: "117학교폭력신고센터 전문상담사", name: "김희정", phone: "609-2298" },
+                { group: "교육국", team: "인성생활교육과", position: "117학교폭력신고센터 전문상담사", name: "조명주", phone: "609-2298" },
+                { group: "교육국", team: "인성생활교육과", position: "117학교폭력신고센터 전문상담사", name: "이슬", phone: "609-2298" },
+                { group: "교육국", team: "인성생활교육과", position: "117학교폭력신고센터 전문상담사", name: "윤진희", phone: "609-2298" },
+                { group: "교육국", team: "인성생활교육과", position: "지세움 대안생활교육지도사", name: "이재숙", phone: "226-8411" },
+                { group: "교육국", team: "인성생활교육과", position: "지세움 대안생활교육지도사", name: "김재천", phone: "226-8401" },
+                { group: "교육국", team: "인성생활교육과", position: "지세움 대안생활교육지도사", name: "지은혜", phone: "226-8412" },
+                { group: "교육국", team: "인성생활교육과", position: "지세움 대안생활교육지도사", name: "신보람", phone: "226-8402" },
+                { group: "교육국", team: "인성생활교육과", position: "지세움 대안생활교육지도사", name: "이자경", phone: "226-8403" },
+                { group: "교육국", team: "인성생활교육과", position: "지세움 청소보조원", name: "이승준", phone: "226-8402" },
+
+                // 행정국
+                { group: "행정국", team: "행정국장", position: "행정국장 국장", name: "박준수", phone: "4208" },
+                { group: "행정국", team: "행정국장", position: "부속실 주무관", name: "여채현", phone: "4208" },
+                { group: "행정국", team: "총무과", position: "과장 과장", name: "임창호", phone: "4110" },
+                { group: "행정국", team: "총무과", position: "총무 사무관", name: "노진희", phone: "4111" },
+                { group: "행정국", team: "총무과", position: "총무 주무관", name: "김두생", phone: "4112" },
+                { group: "행정국", team: "총무과", position: "총무 주무관", name: "한창호", phone: "4113" },
+                { group: "행정국", team: "총무과", position: "총무 주무관", name: "정석우", phone: "4127" },
+                { group: "행정국", team: "총무과", position: "총무 주무관", name: "이혜영", phone: "4104" },
+                { group: "행정국", team: "총무과", position: "총무 주무관", name: "안정섭", phone: "4105" },
+                { group: "행정국", team: "총무과", position: "총무 영양사", name: "조민영", phone: "4129" },
+                { group: "행정국", team: "총무과", position: "총무 청소보조원", name: "문현진", phone: "4508" },
+                { group: "행정국", team: "총무과", position: "인사 사무관", name: "정영채", phone: "4114" },
+                { group: "행정국", team: "총무과", position: "인사 주무관", name: "김선형", phone: "4115" },
+                { group: "행정국", team: "총무과", position: "인사 주무관", name: "문민석", phone: "4116" },
+                { group: "행정국", team: "총무과", position: "인사 주무관", name: "문선형", phone: "4108" },
+                { group: "행정국", team: "총무과", position: "인사 주무관", name: "김명진", phone: "4117" },
+                { group: "행정국", team: "총무과", position: "인사 주무관", name: "백승현", phone: "4118" },
+                { group: "행정국", team: "총무과", position: "인사 주무관", name: "안두열", phone: "4120" },
+                { group: "행정국", team: "총무과", position: "인재개발 사무관", name: "정영채", phone: "226-8601" },
+                { group: "행정국", team: "총무과", position: "인재개발 주무관", name: "주성준", phone: "226-8602" },
+                { group: "행정국", team: "총무과", position: "인재개발 주무관", name: "배계만", phone: "226-8603" },
+                { group: "행정국", team: "총무과", position: "인재개발 청소보조원", name: "박세혁", phone: "없음" },
+                { group: "행정국", team: "총무과", position: "기록·정보 사무관", name: "박명주", phone: "4511" },
+                { group: "행정국", team: "총무과", position: "기록·정보 주무관", name: "문주영", phone: "4512" },
+                { group: "행정국", team: "총무과", position: "기록·정보 주무관", name: "박형선", phone: "4513" },
+                { group: "행정국", team: "총무과", position: "기록·정보 기록연구사", name: "김유진", phone: "4514" },
+                { group: "행정국", team: "총무과", position: "기록·정보 주무관", name: "나호상", phone: "4515" },
+                { group: "행정국", team: "총무과", position: "기록·정보 행정보조원", name: "한승민", phone: "4516" },
+                { group: "행정국", team: "총무과", position: "문서실 주무관", name: "최부선", phone: "4577" },
+                { group: "행정국", team: "총무과", position: "민원봉사 사무관", name: "김형록", phone: "4121" },
+                { group: "행정국", team: "총무과", position: "민원봉사 주무관", name: "김대환", phone: "4123" },
+                { group: "행정국", team: "총무과", position: "민원봉사 주무관", name: "이현실", phone: "4124" },
+                { group: "행정국", team: "총무과", position: "민원봉사 주무관", name: "고명진", phone: "4122" },
+                { group: "행정국", team: "총무과", position: "민원봉사 전화교환원", name: "박미희", phone: "4400" },
+                { group: "행정국", team: "총무과", position: "청사전환배치추진단 사무관", name: "노진희", phone: "4536" },
+                { group: "행정국", team: "총무과", position: "청사전환배치추진단 주무관", name: "허승남", phone: "4538" },
+                { group: "행정국", team: "총무과", position: "청사전환배치추진단 주무관", name: "임준명", phone: "4537" },
+                { group: "행정국", team: "총무과", position: "차량 주무관", name: "김면정", phone: "4566" },
+                { group: "행정국", team: "총무과", position: "차량 주무관", name: "박오환", phone: "4554" },
+                { group: "행정국", team: "총무과", position: "차량 주무관", name: "한승언", phone: "4554" },
+                { group: "행정국", team: "총무과", position: "차량 주무관", name: "남재윤", phone: "4566" },
+                { group: "행정국", team: "총무과", position: "차량 주무관", name: "전순태", phone: "4565" },
+                { group: "행정국", team: "총무과", position: "통신·전기·기계·인쇄 주무관", name: "안재만", phone: "4568" },
+                { group: "행정국", team: "총무과", position: "통신·전기·기계·인쇄 주무관", name: "박성면", phone: "4567" },
+                { group: "행정국", team: "총무과", position: "통신·전기·기계·인쇄 주무관", name: "정상현", phone: "4569" },
+                { group: "행정국", team: "총무과", position: "통신·전기·기계·인쇄 주무관", name: "김창민", phone: "4561" },
+                { group: "행정국", team: "총무과", position: "수목·시설관리 주무관", name: "박천기", phone: "4560" },
+                { group: "행정국", team: "총무과", position: "수목·시설관리 주무관", name: "조병철", phone: "4556" },
+                { group: "행정국", team: "총무과", position: "수목·시설관리 주무관", name: "이재국", phone: "4559" },
+                { group: "행정국", team: "총무과", position: "수목·시설관리 주무관", name: "임선봉", phone: "4557" },
+                { group: "행정국", team: "총무과", position: "안내실(주간) 정문 안내", name: "이형채", phone: "4562" },
+                { group: "행정국", team: "총무과", position: "안내실(주간) 본관 안내", name: "박종이", phone: "4529" },
+                { group: "행정국", team: "총무과", position: "안내실(야간) 당직·안내", name: "고기선", phone: "4584" },
+                { group: "행정국", team: "총무과", position: "안내실(야간) 당직·안내", name: "최해관", phone: "4584" },
+                { group: "행정국", team: "총무과", position: "미화원실", name: "", phone: "4564" },
+                { group: "행정국", team: "조직복지과", position: "과장 과장", name: "김영대", phone: "4630" },
+                { group: "행정국", team: "조직복지과", position: "조직·정원 사무관", name: "안선덕", phone: "4631" },
+                { group: "행정국", team: "조직복지과", position: "조직·정원 주무관", name: "김욱현", phone: "4632" },
+                { group: "행정국", team: "조직복지과", position: "조직·정원 주무관", name: "이슬기", phone: "4633" },
+                { group: "행정국", team: "조직복지과", position: "조직·정원 주무관", name: "하주희", phone: "4635" },
+                { group: "행정국", team: "조직복지과", position: "조직·정원 주무관", name: "장영진", phone: "4634" },
+                { group: "행정국", team: "조직복지과", position: "자치협력 교육협력관(시청파견)", name: "임채석", phone: "4697, 613-2330" },
+                { group: "행정국", team: "조직복지과", position: "자치협력 사무관", name: "유선주", phone: "4640, 613-2331" },
+                { group: "행정국", team: "조직복지과", position: "자치협력 주무관(시청파견)", name: "강우진", phone: "613-2332" },
+                { group: "행정국", team: "조직복지과", position: "자치협력 주무관(시청파견)", name: "김용갑", phone: "613-2333" },
+                { group: "행정국", team: "조직복지과", position: "자치협력 주무관", name: "김동훈", phone: "4642, 613-2334" },
+                { group: "행정국", team: "조직복지과", position: "법무 사무관", name: "김형렬", phone: "4645" },
+                { group: "행정국", team: "조직복지과", position: "법무 주무관", name: "김영준", phone: "4647" },
+                { group: "행정국", team: "조직복지과", position: "법무 주무관", name: "이가영", phone: "4648" },
+                { group: "행정국", team: "조직복지과", position: "법무 주무관", name: "김태훈", phone: "4646" },
+                { group: "행정국", team: "조직복지과", position: "복지 사무관", name: "윤현주", phone: "4491" },
+                { group: "행정국", team: "조직복지과", position: "복지 주무관", name: "최태화", phone: "4492" },
+                { group: "행정국", team: "조직복지과", position: "복지 주무관", name: "김영란", phone: "4493" },
+                { group: "행정국", team: "조직복지과", position: "복지 주무관", name: "주지선", phone: "4498" },
+                { group: "행정국", team: "조직복지과", position: "복지 주무관", name: "이인선", phone: "4494" },
+                { group: "행정국", team: "조직복지과", position: "복지 주무관", name: "장민", phone: "4495" },
+                { group: "행정국", team: "조직복지과", position: "복지 주무관", name: "이해인", phone: "4496" },
+                { group: "행정국", team: "조직복지과", position: "복지 교육복지사", name: "손소영", phone: "4497" },
+                { group: "행정국", team: "조직복지과", position: "(재)광주희망사다리교육재단 사무국장", name: "김영대", phone: "380-4630" },
+                { group: "행정국", team: "조직복지과", position: "(재)광주희망사다리교육재단 사무관", name: "윤현주", phone: "380-4491" },
+                { group: "행정국", team: "조직복지과", position: "(재)광주희망사다리교육재단 주무관", name: "김영란", phone: "380-4493" },
+                { group: "행정국", team: "조직복지과", position: "(재)광주희망사다리교육재단 주무관", name: "주지선", phone: "380-4498" },
+                { group: "행정국", team: "행정예산과", position: "과장 과장", name: "안형관", phone: "4130" },
+                { group: "행정국", team: "행정예산과", position: "초·중학교설립 사무관", name: "이선희", phone: "4131" },
+                { group: "행정국", team: "행정예산과", position: "초·중학교설립 주무관", name: "이동근", phone: "4132" },
+                { group: "행정국", team: "행정예산과", position: "초·중학교설립 주무관", name: "손미리", phone: "4133" },
+                { group: "행정국", team: "행정예산과", position: "초·중학교설립 주무관", name: "김성진", phone: "4134" },
+                { group: "행정국", team: "행정예산과", position: "초·중학교설립 주무관", name: "임은영", phone: "4135" },
+                { group: "행정국", team: "행정예산과", position: "초·중학교설립 주무관", name: "심정", phone: "4136" },
+                { group: "행정국", team: "행정예산과", position: "고·특수학교설립 사무관", name: "전윤영", phone: "4660" },
+                { group: "행정국", team: "행정예산과", position: "고·특수학교설립 주무관", name: "조혜진", phone: "4661" },
+                { group: "행정국", team: "행정예산과", position: "고·특수학교설립 주무관", name: "김옥화", phone: "4662" },
+                { group: "행정국", team: "행정예산과", position: "고·특수학교설립 주무관", name: "소빛나", phone: "4663" },
+                { group: "행정국", team: "행정예산과", position: "예산 사무관", name: "이정아", phone: "4140" },
+                { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "강경남", phone: "4141" },
+                { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "차명룡", phone: "4139" },
+                { group: "행정국", team: "행정예산과", position: "예산 주무관", "name": "민희", phone: "4142" },
+                { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "서종희", phone: "4143" },
+                { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "김지선", phone: "4144" },
+                { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "정영호", phone: "4145" },
+                { group: "행정국", team: "행정예산과", position: "학교회계 사무관", name: "박영태", phone: "4666" },
+                { group: "행정국", team: "행정예산과", position: "학교회계 주무관", name: "박경희", phone: "4600" },
+                { group: "행정국", team: "행정예산과", position: "학교회계 주무관", name: "김경아", phone: "4667" },
+                { group: "행정국", team: "행정예산과", position: "학교회계 주무관", name: "민상현", phone: "4668" },
+                { group: "행정국", team: "행정예산과", position: "학교회계 주무관", name: "이선진", phone: "4669" },
+                { group: "행정국", team: "행정예산과", position: "학교회계 주무관", name: "이혜윤", phone: "4599" },
+                { group: "행정국", team: "재정과", position: "과장 과장", name: "류재방", phone: "4150" },
+                { group: "행정국", team: "재정과", position: "경리 사무관", name: "김은희", phone: "4151" },
+                { group: "행정국", team: "재정과", position: "경리 주무관", name: "장숙정", phone: "4152" },
+                { group: "행정국", team: "재정과", position: "경리 주무관", name: "김혜강", phone: "4153" },
+                { group: "행정국", team: "재정과", position: "경리 주무관", name: "고아라", phone: "4155" },
+                { group: "행정국", team: "재정과", position: "경리 주무관", name: "홍예설", phone: "4156" },
+                { group: "행정국", team: "재정과", position: "경리 주무관", name: "김영권", phone: "4157" },
+                { group: "행정국", team: "재정과", position: "계약 사무관", name: "박시내", phone: "4160" },
+                { group: "행정국", team: "재정과", position: "계약 주무관", name: "정남희", phone: "4161" },
+                { group: "행정국", team: "재정과", position: "계약 주무관", name: "윤지혜", phone: "4162" },
+                { group: "행정국", team: "재정과", position: "계약 주무관", name: "정현석", phone: "4164" },
+                { group: "행정국", team: "재정과", position: "계약 주무관", name: "김정은", phone: "4169" },
+                { group: "행정국", team: "재정과", position: "계약 주무관", name: "류희제", phone: "4665" },
+                { group: "행정국", team: "재정과", position: "계약 주무관", name: "조유미", phone: "4075" },
+                { group: "행정국", team: "재정과", position: "재산관리 사무관", name: "장수남", phone: "4146" },
+                { group: "행정국", team: "재정과", position: "재산관리 주무관", name: "이호성", phone: "4147" },
+                { group: "행정국", team: "재정과", position: "재산관리 주무관", name: "김신국", phone: "4148" },
+                { group: "행정국", team: "재정과", position: "재산관리 주무관", name: "신정현", phone: "4149" },
+                { group: "행정국", team: "재정과", position: "급식 사무관", name: "장은희", phone: "4165" },
+                { group: "행정국", team: "재정과", position: "급식 주무관", name: "박자영", phone: "4166" },
+                { group: "행정국", team: "재정과", position: "급식 주무관", name: "정종갑", phone: "4167" },
+                { group: "행정국", team: "재정과", position: "급식 주무관", name: "임윤진", phone: "4168" },
+                { group: "행정국", team: "재정과", position: "급식 주무관", name: "최수민", phone: "4074" },
+                { group: "행정국", team: "재정과", position: "급식 주무관", name: "서지원", phone: "4178" },
+                { group: "행정국", team: "재정과", position: "급식 주무관", name: "이현탁", phone: "4177" },
+                { group: "행정국", team: "재정과", position: "그린급식지원 주무관", name: "박승현", phone: "4012" },
+                { group: "행정국", team: "재정과", position: "그린급식지원 주무관", name: "박윤정", phone: "4013" },
+                { group: "행정국", team: "재정과", position: "그린급식지원 주무관", name: "문가영", phone: "4014" },
+                { group: "행정국", team: "시설과", position: "과장 과장", name: "조영우", phone: "4170" },
+                { group: "행정국", team: "시설과", position: "시설기획 사무관", name: "김두진", phone: "4171" },
+                { group: "행정국", team: "시설과", position: "시설기획 주무관", name: "최승종", phone: "4172" },
+                { group: "행정국", team: "시설과", position: "시설기획 주무관", name: "김현우", phone: "4174" },
+                { group: "행정국", team: "시설과", position: "시설기획 주무관", name: "김샛별", phone: "4175" },
+                { group: "행정국", team: "시설과", position: "시설기획 주무관", name: "김슬아", phone: "4176" },
+                { group: "행정국", team: "시설과", position: "학교시설1 사무관", name: "최인주", phone: "4431" },
+                { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "서준열", phone: "4432" },
+                { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "조민석", phone: "4433" },
+                { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "최진성", phone: "4434" },
+                { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "임성주", phone: "4436" },
+                { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "조유선", phone: "4435" },
+                { group: "행정국", team: "시설과", position: "학교시설2 사무관", name: "김근열", phone: "4441" },
+                { group: "행정국", team: "시설과", position: "학교시설2 주무관", name: "이동준", phone: "4442" },
+                { group: "행정국", team: "시설과", position: "학교시설2 주무관", name: "강성진", phone: "4445" },
+                { group: "행정국", team: "시설과", position: "학교시설2 주무관", name: "박재성", phone: "4443" },
+                { group: "행정국", team: "시설과", position: "학교시설2 주무관", name: "강유진", phone: "4446" },
+                { group: "행정국", team: "시설과", position: "학교시설2 주무관", name: "김현주", phone: "4444" },
+                { group: "행정국", team: "시설과", position: "학교설비 사무관", name: "박광석", phone: "4190" },
+                { group: "행정국", team: "시설과", position: "학교설비 주무관", name: "이상선", phone: "4192" },
+                { group: "행정국", team: "시설과", position: "학교설비 주무관", name: "김원아", phone: "4191" },
+                { group: "행정국", team: "시설과", position: "학교설비 주무관", name: "장효준", phone: "4194" },
+                { group: "행정국", team: "시설과", position: "학교설비 주무관", name: "김선진", phone: "4193" },
+                { group: "행정국", team: "시설과", position: "학교설비 주무관", name: "배재진", phone: "4195" },
+                { group: "행정국", team: "시설과", position: "미래학교복합시설 사무관", name: "박재형", phone: "4181" },
+                { group: "행정국", team: "시설과", position: "미래학교복합시설 장학사", name: "강봉원", phone: "4182" },
+                { group: "행정국", team: "시설과", position: "미래학교복합시설 주무관", name: "박경민", phone: "4186" },
+                { group: "행정국", team: "시설과", position: "미래학교복합시설 주무관", name: "최홍윤", phone: "4183" },
+                { group: "행정국", team: "시설과", position: "미래학교복합시설 주무관", name: "윤지은", phone: "4188" },
+                { group: "행정국", team: "시설과", position: "미래학교복합시설 주무관", name: "양현태", phone: "4187" },
+
+                // 지원청
+                { group: "지원청", team: "동부지원청", position: "교육장", name: "이명숙", phone: "605-5510" },
+                { group: "지원청", team: "동부지원청", position: "교육지원국장", name: "승영숙", phone: "605-5512" },
+                { group: "지원청", team: "동부지원청", position: "행정지원국장", name: "양관철", phone: "605-5514" },
+                { group: "지원청", team: "동부지원청", position: "유초등교육지원과장", name: "김미나", phone: "605-5520" },
+                { group: "지원청", team: "동부지원청", position: "중등특수교육지원과장", name: "윤영아", phone: "605-5540" },
+                { group: "지원청", team: "동부지원청", position: "체육인성교육지원과장", name: "김현덕", phone: "605-5570" },
+                { group: "지원청", team: "동부지원청", position: "행정지원과장", name: "최진규", phone: "605-5656" },
+                { group: "지원청", team: "동부지원청", position: "평생교육복지과장", name: "변수진", phone: "605-5630" },
+                { group: "지원청", team: "동부지원청", position: "학교시설지원과장", name: "신우진", phone: "605-5720" },
+                { group: "지원청", team: "동부지원청", position: "학교지원센터장", name: "조민관", phone: "605-5750" },
+                { group: "지원청", team: "서부지원청", position: "교육장", name: "이성철", phone: "63-9600" },
+                { group: "지원청", team: "서부지원청", position: "교육지원국장", name: "노재춘", phone: "600-9605" },
+                { group: "지원청", team: "서부지원청", position: "행정지원국장", name: "양규현", phone: "600-9705" },
+                { group: "지원청", team: "서부지원청", position: "유초등교육지원과장", name: "고명숙", phone: "600-9610" },
+                { group: "지원청", team: "서부지원청", position: "중등특수교육지원과장", name: "김순주", phone: "600-9640" },
+                { group: "지원청", team: "서부지원청", position: "체육인성교육지원과장", name: "최범태", phone: "600-9660" },
+                { group: "지원청", team: "서부지원청", position: "행정지원과장", name: "정정례", phone: "600-9710" },
+                { group: "지원청", team: "서부지원청", position: "평생교육복지과장", name: "김두석", phone: "600-9750" },
+                { group: "지원청", team: "서부지원청", position: "학교시설지원과장", name: "김정소", phone: "600-9780" },
+                { group: "지원청", team: "서부지원청", position: "학교지원센터장", name: "김영순", phone: "600-9850" },
+                { group: "지원청", team: "서부지원청", position: "광산교육지원센터장", name: "강신철", phone: "616-9501" },
+
+                // 직속기관
+                { group: "직속기관", team: "창의융합교육원", position: "원장", name: "임미옥", phone: "220-9702" },
+                { group: "직속기관", team: "창의융합교육원", position: "수리과학부장", name: "김세준", phone: "220-9760" },
+                { group: "직속기관", team: "창의융합교육원", position: "외국어교육부장", name: "김경하", phone: "220-9740" },
+                { group: "직속기관", team: "창의융합교육원", position: "총무부장", name: "김수정", phone: "220-9710" },
+                { group: "직속기관", team: "교육연수원", position: "원장", name: "노경희", phone: "600-7777" },
+                { group: "직속기관", team: "교육연수원", position: "연수기획부장", name: "노정현", phone: "600-7788" },
+                { group: "직속기관", team: "교육연수원", position: "교원연수부장", name: "홍어진", phone: "600-7799" },
+                { group: "직속기관", team: "교육연수원", position: "행정연수부장", name: "김정연", phone: "600-7755" },
+                { group: "직속기관", team: "교육연수원", position: "총무부장", name: "정영미", phone: "600-7766" },
+                { group: "직속기관", team: "학생교육원", position: "원장", name: "진영", phone: "061)370-0301" },
+                { group: "직속기관", team: "학생교육원", position: "교학부장", name: "김종화", phone: "061)370-0304" },
+                { group: "직속기관", team: "학생교육원", position: "총무부장", name: "한현숙", phone: "061)370-0303" },
+                { group: "직속기관", team: "학생독립운동기념회관", position: "관장", name: "김용일", phone: "221-5557" },
+                { group: "직속기관", team: "학생독립운동기념회관", position: "관리과장", name: "한순영", phone: "221-5510" },
+                { group: "직속기관", team: "학생독립운동기념회관", position: "선양과장", name: "한순영", phone: "221-5510" },
+                { group: "직속기관", team: "학생독립운동기념회관", position: "문헌정보과장", name: "(대리)", phone: "221-5560" },
+                { group: "직속기관", team: "금호평생교육관", position: "관장", name: "선계룡", phone: "360-6655" },
+                { group: "직속기관", team: "금호평생교육관", position: "관리과장", name: "이승미", phone: "360-6610" },
+                { group: "직속기관", team: "금호평생교육관", position: "운영과장", name: "문균식", phone: "360-6630" },
+                { group: "직속기관", team: "금호평생교육관", position: "문헌정보과장", name: "서효정", phone: "360-6670" },
+                { group: "직속기관", team: "송정다가치문화도서관", position: "관장", name: "강성도", phone: "940-8910" },
+                { group: "직속기관", team: "송정다가치문화도서관", position: "관리과장", name: "설수연", phone: "940-8920" },
+                { group: "직속기관", team: "송정다가치문화도서관", position: "다가치교육과장", name: "김재황", phone: "940-8951" },
+                { group: "직속기관", team: "송정다가치문화도서관", position: "문헌정보과장", name: "설수연(겸직)", phone: "940-8930" },
+                { group: "직속기관", team: "학생교육문화회관", position: "관장", name: "정은남", phone: "380-8820" },
+                { group: "직속기관", team: "학생교육문화회관", position: "관리과장", name: "이상옥", phone: "380-8810" },
+                { group: "직속기관", team: "학생교육문화회관", position: "운영과장", name: "신범석", phone: "380-8850" },
+                { group: "직속기관", team: "학생교육문화회관", position: "문헌정보과장", name: "김옥영", phone: "380-8870" },
+                { group: "직속기관", team: "교육연구정보원", position: "원장", name: "오화숙", phone: "380-4747" },
+                { group: "직속기관", team: "교육연구정보원", position: "AI정보부장", name: "최규남", phone: "380-4760" },
+                { group: "직속기관", team: "교육연구정보원", position: "교육정책연구부장", name: "이종구", phone: "380-4770" },
+                { group: "직속기관", team: "교육연구정보원", position: "총무부장", name: "김선정", phone: "380-4710" },
+                { group: "직속기관", team: "교육연구정보원", position: "관리과장", name: "김혜연", phone: "380-4720" },
+                { group: "직속기관", team: "교육연구정보원", position: "정보통신기반과장", name: "임영숙", phone: "380-4730" },
+                { group: "직속기관", team: "교육연구정보원", position: "정보지원과장", name: "이성복", phone: "380-4740" },
+                { group: "직속기관", team: "유아교육진흥원", position: "원장", name: "이영선", phone: "960-6511" },
+                { group: "직속기관", team: "유아교육진흥원", position: "연구운영과장", name: "이은선", phone: "960-6520" },
+                { group: "직속기관", team: "유아교육진흥원", position: "관리과장", name: "최금영", phone: "960-6550" },
+                { group: "직속기관", team: "해양수련원", position: "원장", name: "최종철", phone: "061)830-3601" },
+                { group: "직속기관", team: "해양수련원", position: "원장", name: "배현", phone: "061)830-3651" },
+                { group: "직속기관", team: "해양수련원", position: "원장", name: "우유길", phone: "061)830-3602" },
+                { group: "직속기관", team: "시민협치진흥원", position: "원장", name: "김진구", phone: "712-6700" },
+                { group: "직속기관", team: "시민협치진흥원", position: "시민협치기후환경과장", name: "하정호", phone: "712-6710" },
+                { group: "직속기관", team: "시민협치진흥원", position: "지역교육협력과장", name: "윤은숙", phone: "712-6740" },
+                { group: "직속기관", team: "시민협치진흥원", position: "학부모참여과장", name: "윤현정", phone: "712-6770" },
+
+                // 광주광역시의회
+                { group: "광주광역시의회", team: "교육문화전문위원실", position: "전문위원", name: "김종오", phone: "613-5410" },
+                { group: "광주광역시의회", team: "교육문화전문위원실", position: "주무관", name: "박동현", phone: "613-5412" },
+                { group: "광주광역시의회", team: "교육문화전문위원실", position: "주무관", name: "박한웅", phone: "613-5418" },
+                { group: "광주광역시의회", team: "교육문화전문위원실", position: "속기사", name: "강은혜", phone: "613-5419" },
+                { group: "광주광역시의회", team: "교육문화전문위원실", position: "주무관", name: "김시은", phone: "613-5426" },
+                { group: "광주광역시의회", team: "입법조사담당관실", position: "주무관", name: "백형동", phone: "613-5193" },
+
+                // 대학협력
+                { group: "대학협력", team: "전남대 교육협력관실", position: "교육협력관", name: "정광희", phone: "530-5415" },
+                { group: "대학협력", team: "전남대 교육협력관실", position: "장학사", name: "남보라", phone: "530-5417" },
+                { group: "대학협력", team: "전남대 교육협력관실", position: "주무관", name: "오희선", phone: "530-5418" },
+                { group: "대학협력", team: "조선대 관학협력센터", position: "교육협력관", name: "전종길", phone: "608-5530" },
+                { group: "대학협력", team: "조선대 관학협력센터", position: "장학관", name: "전은숙", phone: "608-5531" },
+                { group: "대학협력", team: "조선대 관학협력센터", position: "장학사", name: "김민정", phone: "608-5532" },
+                { group: "대학협력", team: "조선대 관학협력센터", position: "주무관", name: "김성희", phone: "608-5533" },
+                { group: "대학협력", team: "순천대 교육협력관실", position: "사무관", name: "송용훈", phone: "061-750-5525" },
+                { group: "대학협력", team: "순천대 교육협력관실", position: "주무관", name: "신수이", phone: "061-750-5526" },
+                { group: "대학협력", team: "교육대 교육협력관실", position: "교육협력관", name: "이정화", phone: "520-4402" },
+                { group: "대학협력", team: "교육대 교육협력관실", position: "주무관", name: "임수미", phone: "520-4403" },
+                { group: "대학협력", team: "교육대 교육협력관실", position: "주무관", name: "김서윤", phone: "520-4404" }
+            ];
+
+            // --- 데이터 처리 로직 ---
+            const specialGroupsForPrefix = ["교육감", "부교육감", "정책국", "교육국", "행정국"];
+            staffData.forEach(person => {
+                // 서부지원청 교육장 전화번호 수정 (가장 구체적인 규칙)
+                if (person.group === '지원청' && person.team === '서부지원청' && person.position === '교육장') {
+                    person.phone = '062-600-9600';
+                }
+                // 4자리 번호 처리 (기존 로직)
+                else if (specialGroupsForPrefix.includes(person.group) && /^\d{4}$/.test(person.phone)) {
+                    person.phone = `062-380-${person.phone}`;
+                }
+                // 8자리 번호 처리 (e.g., xxx-xxxx)
+                else if (person.phone && person.phone.length === 8 && person.phone.includes('-')) {
+                    person.phone = `062-${person.phone}`;
+                }
+                // '061)' -> '061-' 변환
+                else if (person.phone && person.phone.startsWith('061)')) {
+                    person.phone = person.phone.replace('061)', '061-');
+                }
+            });
+
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const searchResults = document.getElementById('searchResults');
+            const groupTabs = document.getElementById('groupTabs');
+            const groupContent = document.getElementById('groupContent');
+
+            // Helper functions for sub-grouping
+            const getSubTeamName = (position) => {
+                const lastSpaceIndex = position.lastIndexOf(' ');
+                if (lastSpaceIndex === -1) {
+                    return position;
+                }
+                return position.substring(0, lastSpaceIndex);
+            };
+
+            const getActualPosition = (position) => {
+                const lastSpaceIndex = position.lastIndexOf(' ');
+                if (lastSpaceIndex === -1) {
+                    return '';
+                }
+                return position.substring(lastSpaceIndex + 1);
+            };
+
+            // 1. 데이터를 그룹별, 팀별로 처리
+            const groups = {};
+            staffData.forEach(p => {
+                if (!groups[p.group]) {
+                    groups[p.group] = {};
+                }
+                if (!groups[p.group][p.team]) {
+                    groups[p.group][p.team] = [];
+                }
+                groups[p.group][p.team].push(p);
+            });
+
+            // 2. UI 빌드
+            const groupOrder = ["교육감", "부교육감", "정책국", "교육국", "행정국", "지원청", "직속기관", "광주광역시의회", "대학협력"];
+            const specialGroups = ["교육감", "부교육감", "정책국", "교육국", "행정국"];
+
+            // Helper to create table for members
+            function createMemberTable(members, isSpecial) {
+                const tableContainer = document.createElement('div');
+                tableContainer.className = 'overflow-x-auto custom-scrollbar';
+
+                const table = document.createElement('table');
+                table.className = 'min-w-full bg-white';
+                
+                const thead = document.createElement('thead');
+                thead.className = 'bg-gray-50';
+                thead.innerHTML = `
+                    <tr>
+                        <th class="px-4 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">${isSpecial ? '세부 직책' : '직책'}</th>
+                        <th class="px-4 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">성명</th>
+                        <th class="px-4 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">전화번호</th>
+                    </tr>
+                `;
+                table.appendChild(thead);
+
+                const tbody = document.createElement('tbody');
+                tbody.className = 'divide-y divide-gray-200';
+                
+                members.forEach(member => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50';
+                    const positionCell = isSpecial ? getActualPosition(member.position) : member.position;
+                    
+                    // 전화번호를 클릭 가능한 링크로 만들기
+                    const phoneContent = member.phone
+                        ? `<a href="tel:${member.phone.replace(/[^0-9*#]/g, '')}" class="text-blue-600 hover:underline">${member.phone}</a>`
+                        : '-';
+
+                    row.innerHTML = `
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-800">${positionCell || '-'}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-800 font-medium">${member.name}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${phoneContent}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                table.appendChild(tbody);
+                tableContainer.appendChild(table);
+                return tableContainer;
+            }
+
+            groupOrder.forEach(groupName => {
+                if (!groups[groupName]) return;
+
+                // 탭 빌드
+                const tabButton = document.createElement('a');
+                tabButton.href = `#`;
+                tabButton.className = 'group-tab whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm text-gray-500 hover:text-blue-600 hover:border-blue-300 cursor-pointer';
+                tabButton.textContent = groupName;
+                tabButton.dataset.group = groupName;
+                groupTabs.appendChild(tabButton);
+
+                // 콘텐츠 섹션 빌드
+                const section = document.createElement('div');
+                section.id = `group-${groupName}`;
+                section.className = 'group-section hidden'; // 모든 섹션을 초기에 숨김
+
+                const teams = groups[groupName];
+                const isSpecialGroup = specialGroups.includes(groupName);
+
+                for (const teamName in teams) {
+                    const teamContainer = document.createElement('div');
+                    teamContainer.className = 'mb-8';
+                    
+                    const teamTitle = document.createElement('h4');
+                    teamTitle.className = 'text-lg font-semibold text-gray-800 bg-gray-100 p-3 rounded-t-lg';
+                    teamTitle.textContent = teamName;
+                    teamContainer.appendChild(teamTitle);
+
+                    const members = teams[teamName];
+                    
+                    if (isSpecialGroup) {
+                        const subTeamContentWrapper = document.createElement('div');
+                        subTeamContentWrapper.className = 'border border-t-0 border-gray-200 rounded-b-lg p-4 space-y-6';
+                        
+                        const subTeams = {};
+                        members.forEach(member => {
+                            const subTeam = getSubTeamName(member.position);
+                            if (!subTeams[subTeam]) {
+                                subTeams[subTeam] = [];
+                            }
+                            subTeams[subTeam].push(member);
+                        });
+
+                        for (const subTeamName in subTeams) {
+                            const subTeamDiv = document.createElement('div');
+                            
+                            const subTeamTitle = document.createElement('h5');
+                            subTeamTitle.className = 'text-md font-semibold text-blue-700 mb-2';
+                            subTeamTitle.textContent = subTeamName;
+                            subTeamDiv.appendChild(subTeamTitle);
+
+                            const table = createMemberTable(subTeams[subTeamName], true);
+                            subTeamDiv.appendChild(table);
+                            subTeamContentWrapper.appendChild(subTeamDiv);
+                        }
+                        teamContainer.appendChild(subTeamContentWrapper);
+                    } else {
+                        teamTitle.classList.add('rounded-b-lg'); // Non-special groups have fully rounded titles
+                        const table = createMemberTable(members, false);
+                        table.classList.add('border', 'border-gray-200', 'rounded-b-lg');
+                        teamContainer.appendChild(table);
+                    }
+                    section.appendChild(teamContainer);
+                }
+                groupContent.appendChild(section);
+            });
+
+            // 검색 기능
+            const performSearch = () => {
+                const query = searchInput.value.trim().toLowerCase();
+                if (query === '') {
+                    searchResults.innerHTML = '<p class="text-gray-500">검색어를 입력해주세요.</p>';
+                    return;
+                }
+                const results = staffData.filter(person => person.name.toLowerCase().includes(query));
+
+                searchResults.innerHTML = '';
+                if (results.length > 0) {
+                    const list = document.createElement('ul');
+                    list.className = 'space-y-3';
+                    results.forEach(person => {
+                        const li = document.createElement('li');
+                        li.className = 'p-4 bg-green-50 border-l-4 border-green-500 rounded-r-lg';
+                        
+                        // 검색 결과의 전화번호도 클릭 가능한 링크로 만들기
+                        const phoneContent = person.phone
+                            ? `<a href="tel:${person.phone.replace(/[^0-9*#]/g, '')}" class="text-blue-600 hover:underline">${person.phone}</a>`
+                            : '정보 없음';
+                        
+                        li.innerHTML = `
+                            <p class="font-bold text-lg text-gray-800">${person.name}</p>
+                            <p class="text-gray-600">${person.group} / ${person.team} / ${person.position}</p>
+                            <p class="text-gray-800 font-semibold">📞 ${phoneContent}</p>
+                        `;
+                        list.appendChild(li);
+                    });
+                    searchResults.appendChild(list);
+                } else {
+                    searchResults.innerHTML = `<p class="text-center text-red-500 font-semibold p-4 bg-red-50 rounded-lg">"${searchInput.value}"에 대한 검색 결과가 없습니다.</p>`;
+                }
+            };
+
+            // 이벤트 리스너
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // 탭 클릭 이벤트 리스너 (아코디언 기능)
+            groupTabs.addEventListener('click', (e) => {
+                e.preventDefault();
+                const clickedTab = e.target.closest('.group-tab');
+                if (!clickedTab) return;
+
+                const targetGroup = clickedTab.dataset.group;
+                const targetSection = document.getElementById(`group-${targetGroup}`);
+
+                // 이미 활성화된 탭을 다시 클릭하면 내용을 숨김
+                if (clickedTab.classList.contains('tab-active')) {
+                    clickedTab.classList.remove('tab-active');
+                    targetSection.classList.add('hidden');
+                } else {
+                    // 모든 탭과 섹션을 비활성화/숨김
+                    document.querySelectorAll('.group-tab').forEach(tab => {
+                        tab.classList.remove('tab-active');
+                    });
+                    document.querySelectorAll('.group-section').forEach(section => {
+                        section.classList.add('hidden');
+                    });
+
+                    // 클릭된 탭과 섹션만 활성화/표시
+                    clickedTab.classList.add('tab-active');
+                    targetSection.classList.remove('hidden');
+                }
+            });
+        }
+
+        // 페이지의 모든 리소스가 로드된 후 스크립트 실행
+        window.onload = initializeApp;
+    </script>
+
+</body>
+</html>
