@@ -2,8 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- iPhone Safari 호환성을 위한 viewport 수정 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>광주광역시교육청 직원 검색</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -14,8 +13,7 @@
         body {
             font-family: 'Noto Sans KR', 'Inter', sans-serif;
         }
-        /* 스크롤바 스타일링 (데스크톱 브라우저용) */
-        /* 참고: iOS Safari에서는 이 스타일이 적용되지 않으며, 기본 스크롤바가 사용됩니다. */
+        /* 스크롤바 스타일링 */
         .custom-scrollbar::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -31,11 +29,6 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #aaa;
         }
-        /* iOS에서 부드러운 스크롤링(관성 스크롤)을 위한 속성 */
-        .custom-scrollbar {
-            -webkit-overflow-scrolling: touch;
-        }
-
         /* 활성 탭(링크) 스타일 */
         .tab-active {
             border-color: #3b82f6;
@@ -55,39 +48,12 @@
             <p class="text-gray-600 mt-2">[2025.7.7. STmade] 이름으로 직원을 검색(1글자 이상 입력)하거나 그룹을 선택하여 명단을 확인하세요. 휴대전화에서 전화번호를 터치하면 통화로 연결됩니다.</p>
         </header>
 
-        <!-- 바탕화면 바로가기 안내 -->
-        <div class="space-y-6 mb-8">
-            <!-- 아이폰용 안내 -->
-            <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-800 p-4 rounded-lg shadow-sm">
-                <p class="font-bold">📱 아이폰 바탕화면에 바로가기 만들기</p>
-                <ol class="list-decimal list-inside mt-2 text-sm space-y-1">
-                    <li>이 HTML 파일을 <strong>'파일'</strong> 앱에 저장합니다.</li>
-                    <li>Safari(사파리) 브라우저를 열고, 주소창에 <strong>file:///</strong> 을 입력 후 이동합니다.</li>
-                    <li>저장된 HTML 파일(<strong>★교육청일람표 직원 검색기.html</strong>)을 찾아 실행합니다.</li>
-                    <li>하단의 <strong>'공유'</strong> 아이콘(상자 위 화살표 모양)을 탭합니다.</li>
-                    <li>메뉴에서 <strong>'홈 화면에 추가'</strong>를 선택하면 완료됩니다.</li>
-                </ol>
-            </div>
-            <!-- 안드로이드용 안내 -->
-            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-lg shadow-sm">
-                <p class="font-bold">💡 안드로이드 바탕화면에 바로가기 만들기 (삼성폰 기준)</p>
-                <ol class="list-decimal list-inside mt-2 text-sm space-y-1">
-                    <li>이 HTML 파일을 휴대전화에 다운로드합니다.</li>
-                    <li><strong>'내 파일'</strong> 앱 실행 → <strong>'다운로드'</strong> 카테고리 선택</li>
-                    <li>(카카오톡으로 받았다면 <strong>'Download > KaKaoTalk'</strong> 폴더로 이동)</li>
-                    <li>다운로드한 파일(<strong>★교육청일람표 직원 검색기.html</strong>)을 길게 누릅니다.</li>
-                    <li>우측 하단 <strong>'더보기(점 3개)'</strong> 메뉴 선택 → <strong>'홈 화면에 추가'</strong>를 선택하면 완료됩니다.</li>
-                </ol>
-            </div>
-        </div>
-
         <!-- 이름으로 검색 섹션 -->
         <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
             <h2 class="text-2xl font-semibold mb-4 text-gray-700">이름으로 검색</h2>
             <div class="flex flex-col sm:flex-row gap-4">
                 <input type="text" id="searchInput" placeholder="직원 이름을 입력하세요..." class="flex-grow w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                <!-- 버튼 타입을 명시적으로 'button'으로 설정 -->
-                <button id="searchButton" type="button" class="w-full sm:w-auto bg-blue-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-md">검색</button>
+                <button id="searchButton" class="w-full sm:w-auto bg-blue-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-md">검색</button>
             </div>
             <div id="searchResults" class="mt-6">
                 <!-- 검색 결과가 여기에 표시됩니다. -->
@@ -96,7 +62,7 @@
 
         <!-- 그룹별로 보기 섹션 -->
         <div class="bg-white p-6 rounded-xl shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-700">그룹별로 보기</h2>
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">기관별로 보기</h2>
             
             <!-- 그룹 선택 탭 -->
             <div class="border-b border-gray-200">
@@ -113,7 +79,7 @@
     </div>
 
     <script>
-        function initializeApp() {
+        document.addEventListener('DOMContentLoaded', () => {
             // 직원 데이터 구조: { group, team, position, name, phone }
             const staffData = [
                 // 교육감
@@ -249,7 +215,7 @@
                 { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "임창섭", phone: "4872" },
                 { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "노지은", phone: "4873" },
                 { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "최준민", phone: "4874" },
-                { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "봉준열", phone: "4875, 4119" },
+                { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "봉준열", phone: "062-380-4875, 062-380-4119" },
                 { group: "정책국", team: "안전총괄과", position: "안전기획 주무관", name: "박건희", phone: "4876" },
                 { group: "정책국", team: "안전총괄과", position: "교육환경 사무관", name: "이은양", phone: "4881" },
                 { group: "정책국", team: "안전총괄과", position: "교육환경 주무관", name: "주형례", phone: "4882" },
@@ -270,7 +236,7 @@
                 { group: "정책국", team: "안전총괄과", position: "안전진단 주무관", name: "김우성", phone: "4295" },
                 { group: "정책국", team: "안전총괄과", position: "안전진단 주무관", name: "이준성", phone: "4294" },
                 { group: "정책국", team: "안전총괄과", position: "비상대비 전문경력관", name: "이은직", phone: "4100" },
-                { group: "정책국", team: "안전총괄과", position: "비상대비 주무관", name: "김철수", phone: "376-0727" },
+                { group: "정책국", team: "안전총괄과", position: "비상대비 주무관", name: "김철수", phone: "4101" },
                 { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "이지선", phone: "380-4158" },
                 { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "윤정", phone: "380-4279" },
                 { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "강은혜", phone: "380-4277" },
@@ -567,11 +533,11 @@
                 { group: "행정국", team: "조직복지과", position: "조직·정원 주무관", name: "이슬기", phone: "4633" },
                 { group: "행정국", team: "조직복지과", position: "조직·정원 주무관", name: "하주희", phone: "4635" },
                 { group: "행정국", team: "조직복지과", position: "조직·정원 주무관", name: "장영진", phone: "4634" },
-                { group: "행정국", team: "조직복지과", position: "자치협력 교육협력관(시청파견)", name: "임채석", phone: "4697, 613-2330" },
-                { group: "행정국", team: "조직복지과", position: "자치협력 사무관", name: "유선주", phone: "4640, 613-2331" },
+                { group: "행정국", team: "조직복지과", position: "자치협력 교육협력관(시청파견)", name: "임채석", phone: "062-380-4697, 613-2330" },
+                { group: "행정국", team: "조직복지과", position: "자치협력 사무관", name: "유선주", phone: "062-380-4640, 613-2331" },
                 { group: "행정국", team: "조직복지과", position: "자치협력 주무관(시청파견)", name: "강우진", phone: "613-2332" },
                 { group: "행정국", team: "조직복지과", position: "자치협력 주무관(시청파견)", name: "김용갑", phone: "613-2333" },
-                { group: "행정국", team: "조직복지과", position: "자치협력 주무관", name: "김동훈", phone: "4642, 613-2334" },
+                { group: "행정국", team: "조직복지과", position: "자치협력 주무관", name: "김동훈", phone: "062-380-4642, 613-2334" },
                 { group: "행정국", team: "조직복지과", position: "법무 사무관", name: "김형렬", phone: "4645" },
                 { group: "행정국", team: "조직복지과", position: "법무 주무관", name: "김영준", phone: "4647" },
                 { group: "행정국", team: "조직복지과", position: "법무 주무관", name: "이가영", phone: "4648" },
@@ -602,7 +568,7 @@
                 { group: "행정국", team: "행정예산과", position: "예산 사무관", name: "이정아", phone: "4140" },
                 { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "강경남", phone: "4141" },
                 { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "차명룡", phone: "4139" },
-                { group: "행정국", team: "행정예산과", position: "예산 주무관", "name": "민희", phone: "4142" },
+                { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "민희", phone: "4142" },
                 { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "서종희", phone: "4143" },
                 { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "김지선", phone: "4144" },
                 { group: "행정국", team: "행정예산과", position: "예산 주무관", name: "정영호", phone: "4145" },
@@ -651,7 +617,7 @@
                 { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "조민석", phone: "4433" },
                 { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "최진성", phone: "4434" },
                 { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "임성주", phone: "4436" },
-                { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "조유선", phone: "4435" },
+                { group: "행정국", team: "시설과", position: "학교시설1 주무관", name: "조유선", phone: "4435" },          
                 { group: "행정국", team: "시설과", position: "학교시설2 사무관", name: "김근열", phone: "4441" },
                 { group: "행정국", team: "시설과", position: "학교시설2 주무관", name: "이동준", phone: "4442" },
                 { group: "행정국", team: "시설과", position: "학교시설2 주무관", name: "강성진", phone: "4445" },
@@ -671,28 +637,389 @@
                 { group: "행정국", team: "시설과", position: "미래학교복합시설 주무관", name: "윤지은", phone: "4188" },
                 { group: "행정국", team: "시설과", position: "미래학교복합시설 주무관", name: "양현태", phone: "4187" },
 
-                // 지원청
-                { group: "지원청", team: "동부지원청", position: "교육장", name: "이명숙", phone: "605-5510" },
-                { group: "지원청", team: "동부지원청", position: "교육지원국장", name: "승영숙", phone: "605-5512" },
-                { group: "지원청", team: "동부지원청", position: "행정지원국장", name: "양관철", phone: "605-5514" },
-                { group: "지원청", team: "동부지원청", position: "유초등교육지원과장", name: "김미나", phone: "605-5520" },
-                { group: "지원청", team: "동부지원청", position: "중등특수교육지원과장", name: "윤영아", phone: "605-5540" },
-                { group: "지원청", team: "동부지원청", position: "체육인성교육지원과장", name: "김현덕", phone: "605-5570" },
-                { group: "지원청", team: "동부지원청", position: "행정지원과장", name: "최진규", phone: "605-5656" },
-                { group: "지원청", team: "동부지원청", position: "평생교육복지과장", name: "변수진", phone: "605-5630" },
-                { group: "지원청", team: "동부지원청", position: "학교시설지원과장", name: "신우진", phone: "605-5720" },
-                { group: "지원청", team: "동부지원청", position: "학교지원센터장", name: "조민관", phone: "605-5750" },
-                { group: "지원청", team: "서부지원청", position: "교육장", name: "이성철", phone: "63-9600" },
-                { group: "지원청", team: "서부지원청", position: "교육지원국장", name: "노재춘", phone: "600-9605" },
-                { group: "지원청", team: "서부지원청", position: "행정지원국장", name: "양규현", phone: "600-9705" },
-                { group: "지원청", team: "서부지원청", position: "유초등교육지원과장", name: "고명숙", phone: "600-9610" },
-                { group: "지원청", team: "서부지원청", position: "중등특수교육지원과장", name: "김순주", phone: "600-9640" },
-                { group: "지원청", team: "서부지원청", position: "체육인성교육지원과장", name: "최범태", phone: "600-9660" },
-                { group: "지원청", team: "서부지원청", position: "행정지원과장", name: "정정례", phone: "600-9710" },
-                { group: "지원청", team: "서부지원청", position: "평생교육복지과장", name: "김두석", phone: "600-9750" },
-                { group: "지원청", team: "서부지원청", position: "학교시설지원과장", name: "김정소", phone: "600-9780" },
-                { group: "지원청", team: "서부지원청", position: "학교지원센터장", name: "김영순", phone: "600-9850" },
-                { group: "지원청", team: "서부지원청", position: "광산교육지원센터장", name: "강신철", phone: "616-9501" },
+                // 동부지원청
+                { group: "동부지원청", team: "교육장", position: "교육장", name: "이명숙", phone: "605-5510" },
+                { group: "동부지원청", team: "교육장", position: "부속실 주무관", name: "나지선", phone: "605-5507" },
+                { group: "동부지원청", team: "교육지원국", position: "국장", name: "승영숙", phone: "605-5512" },
+                { group: "동부지원청", team: "교육지원국", position: "부속실 주무관", name: "정세진", phone: "605-5516" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "과장", name: "김미나", phone: "605-5520" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "초등교육과정 장학사", name: "김은하", phone: "605-5525" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "초등교육과정 장학사", name: "김동률", phone: "605-5526" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "초등교육과정 장학사", name: "정지현", phone: "605-5527" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "초등교육과정 주무관", name: "장수진", phone: "605-5528" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "초등인사 장학사", name: "장현주", phone: "605-5521" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "초등인사 장학사", name: "안명희", phone: "605-5522" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "초등인사 주무관", name: "변지혜", phone: "605-5523" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "유아교육 장학사", name: "이화심", phone: "605-5545" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "유아교육 주무관", name: "박서현", phone: "605-5544" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "유초등운영 담당", name: "김기정", phone: "605-5531" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "유초등운영 주무관", name: "김소영", phone: "605-5533" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "유초등운영 주무관", name: "윤나리", phone: "605-5532" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "학습종합클리닉센터 파견교사", name: "정태영", phone: "605-5781" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "학습종합클리닉센터 파견교사", name: "장승현", phone: "605-5783" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "교원특별연수 파견교사", name: "김고은", phone: "605-5781" },
+                { group: "동부지원청", team: "교육지원국 유초등교육지원과", position: "교원특별연수 파견교사", name: "정수정", phone: "605-5781" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "과장", name: "윤영아", phone: "605-5540" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "중등교육과정 장학사", name: "김영주", phone: "605-5551" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "중등교육과정 장학사", name: "정미란", phone: "605-5552" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "중등교육과정 장학사", name: "박지영", phone: "605-5553" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "중등교육과정 주무관", name: "박유리", phone: "605-5554" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "중등인사 장학사", name: "강민경", phone: "605-5541" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 장학사", name: "최준기", phone: "605-5535" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "엄우진", phone: "605-5740" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "정유진", phone: "605-5741" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "김다솜", phone: "605-5742" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "박유진", phone: "605-5743" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "한송이", phone: "605-5744" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "김해옥", phone: "605-5745" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "김초희", phone: "605-5747" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "김보성", phone: "605-5734" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "이경건", phone: "605-5749" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 교사", name: "최하나", phone: "605-5536" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 실무사", name: "김경아", phone: "605-5537" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 사회복지사", name: "김명숙", phone: "605-5538" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육 청소보조", name: "김민지", phone: "605-5556" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "중학교배정 담당", name: "장계원", phone: "605-5561" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "중학교배정 주무관", name: "정세연", phone: "605-5562" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "중학교배정 주무관", name: "유수광", phone: "605-5563" },
+                { group: "동부지원청", team: "교육지원국 중등특수교육지원과", position: "중학교배정 실무사", name: "임하온", phone: "605-5564" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "과장", name: "김현덕", phone: "605-5570" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "체육보건교육 장학사", name: "김보미", phone: "605-5591" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "체육보건교육 주무관", name: "김강택", phone: "605-5592" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 장학사", name: "정영", phone: "605-5571" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 장학사", name: "박정환", phone: "605-5572" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 주무관", name: "정상연", phone: "605-5573" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 전문상담사", name: "윤평화", phone: "605-5594" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 전문상담사", name: "이시은", phone: "605-5596" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 전문상담사", name: "김경태", phone: "605-5574" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 전문상담사", name: "권서영", phone: "605-5575" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 전문상담사", name: "윤성경", phone: "605-5576" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "체험학습운영 담당", name: "김혜영", phone: "605-5581" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "체험학습운영 주무관", name: "김선영", phone: "605-5582" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "체험학습운영 주무관", name: "남태환", phone: "605-5583" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 장학사", name: "이명은", phone: "716-6001" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 장학사", name: "방교연", phone: "716-6002" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 주무관", name: "김성윤", phone: "716-6003" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 주무관", name: "박세연", phone: "716-6004" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 실무사", name: "김경석", phone: "716-6008" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 실무사", name: "윤소희", phone: "716-6018" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "Wee센터 전문상담교사", name: "장다솔", phone: "605-5771" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "Wee센터 전문상담교사", name: "김다영", phone: "605-5772" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "Wee센터 전문상담교사", name: "고은아", phone: "605-5777" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "Wee센터 전문상담교사", name: "최유진", phone: "605-5773" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "Wee센터 전문상담교사", name: "최다솔", phone: "605-5774" },
+                { group: "동부지원청", team: "교육지원국 체육인성교육지원과", position: "Wee센터 전문상담교사", name: "김효주", phone: "605-5775" },
+                { group: "동부지원청", team: "행정지원국", position: "국장", name: "양관철", phone: "605-5514" },
+                { group: "동부지원청", team: "행정지원국", position: "부속실 주무관", name: "정세진", phone: "605-5516" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "과장", name: "최진규", phone: "605-5656" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "총무 담당", name: "김윤영", phone: "605-5601" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "윤영", phone: "605-5602" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "김예찬", phone: "605-5603" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "이용헌", phone: "605-5605" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "이성일", phone: "605-5606" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "김혜진", phone: "605-5607" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "예산학급배정 담당", name: "박영경", phone: "605-5610" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "안상신", phone: "605-5611" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "박보라", phone: "605-5612" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "박예솔", phone: "605-5614" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "송명호", phone: "605-5613" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "송화경", phone: "605-5665" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "계약 담당", name: "나진", phone: "605-5621" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "이혜지", phone: "605-5626" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "송준호", phone: "605-5624" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "남희숙", phone: "605-5622" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "이현진", phone: "605-5623" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "민세희", phone: "605-5629" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "오우리", phone: "605-5625" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "감사 담당", name: "정정연", phone: "605-5660" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "감사 주무관", name: "김수영", phone: "605-5661" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "감사 주무관", name: "국예원", phone: "605-5662" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "기록정보 담당", name: "김성열", phone: "605-5615" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "기록정보 기록연구사", name: "정현우", phone: "605-5617" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "기록정보 주무관", name: "김서나", phone: "605-5618" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "기록정보 주무관", name: "김승기", phone: "605-5616" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "청사관리 주무관", name: "김상록", phone: "605-5679" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "청사관리 환경관리", name: "백현", phone: "" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "청사관리 환경관리", name: "이민숙", phone: "" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "청사관리 환경관리", name: "강영희", phone: "" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "차량 운전", name: "이승욱", phone: "605-5678" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "기계실 열관리", name: "배재건", phone: "605-5691" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "구내식당 조리사", name: "이진희", phone: "605-5693" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "구내식당 조리원", name: "문소정", phone: "605-5692" },
+                { group: "동부지원청", team: "행정지원국 행정지원과", position: "구내식당 조리원", name: "고은아", phone: "605-5692" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "과장", name: "변수진", phone: "605-5630" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 담당", name: "박인창", phone: "605-5631" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 주무관", name: "이종열", phone: "605-5632" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 주무관", name: "정은희", phone: "605-5633" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 주무관", name: "조효진", phone: "605-5634" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 주무관", name: "조민서", phone: "605-5635" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "평생교육지도 담당", name: "노창경", phone: "605-5641" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "평생교육지도 주무관", name: "이민", phone: "605-5642" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "평생교육지도 주무관", name: "공현건", phone: "605-5643" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "평생교육지도 주무관", name: "양동철", phone: "605-5646" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 담당", name: "이지은", phone: "605-5651" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 주무관", name: "김미림", phone: "605-5652" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 주무관", name: "이진솔", phone: "605-5653" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 주무관", name: "홍나라", phone: "605-5654" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 교육복지사", name: "최종환", phone: "605-5655" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "급식 담당", name: "박찬태", phone: "605-5671" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "김수연", phone: "605-5672" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "조경아", phone: "605-5674" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "범진성", phone: "605-5673" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "김혜아", phone: "605-5668" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "박용빈", phone: "605-5675" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "급식 순회교사", name: "진재희", phone: "605-5677" },
+                { group: "동부지원청", team: "행정지원국 평생교육복지과", position: "급식 대체", name: "황종하", phone: "605-5676" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "과장", name: "신우진", phone: "605-5720" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설 담당", name: "최수복", phone: "605-5721" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "조상우", phone: "605-5723" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "정진희", phone: "605-5725" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "박진홍", phone: "605-5722" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "위대범", phone: "605-5724" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "김인옥", phone: "605-5729" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "한명성", phone: "605-5726" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 담당", name: "김태형", phone: "605-5731" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "김민", phone: "605-5732" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "이현근", phone: "605-5737" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "임기석", phone: "605-5733" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "김슬기", phone: "605-5738" },
+                { group: "동부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "김고은", phone: "605-5734" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "과장", name: "조민관", phone: "605-5750" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 담당", name: "나길영", phone: "605-5751" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "문소라", phone: "605-5752" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "유정인", phone: "605-5753" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "김민영", phone: "605-5756" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "이소희", phone: "605-5754" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "이예지", phone: "605-5755" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교권법무 장학사", name: "최종희", phone: "605-5761" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교권법무 장학사", name: "김재희", phone: "605-5766" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교권법무 변호사", name: "전주현", phone: "605-5762" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교권법무 전문상담사", name: "이수덕", phone: "605-5763" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교권법무 주무관", name: "김유민", phone: "605-5767" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "교권법무 주무관", name: "김지호", phone: "605-5764" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 담당", name: "김권중", phone: "605-5791" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "김정화", phone: "605-5765" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "이현태", phone: "605-5792" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "고홍길", phone: "605-5793" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "강효구", phone: "605-5794" },
+                { group: "동부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "백준상", phone: "605-5795" },
+
+                // 서부지원청
+                { group: "서부지원청", team: "교육장", position: "교육장", name: "이성철", phone: "600-9600" },
+                { group: "서부지원청", team: "교육장", position: "부속실 주무관", name: "진정임", phone: "600-9608" },
+                { group: "서부지원청", team: "교육지원국", position: "국장", name: "노재춘", phone: "600-9605" },
+                { group: "서부지원청", team: "교육지원국", position: "부속실 주무관", name: "장지수", phone: "600-9708" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "과장", name: "고명숙", phone: "600-9610" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "초등교육과정 장학사", name: "오석준", phone: "600-9611" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "초등교육과정 장학사", name: "위건욱", phone: "600-9612" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "초등교육과정 장학사", name: "이경진", phone: "600-9613" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "초등교육과정 장학사", name: "임유련", phone: "600-9614" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "초등교육과정 주무관", name: "전은옥", phone: "600-9615" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "초등인사 장학사", name: "박주희", phone: "600-9616" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "초등인사 장학사", name: "오선경", phone: "600-9617" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "초등인사 주무관", name: "박민주", phone: "600-9618" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "유아교육 장학사", name: "강정현", phone: "600-9831" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "유아교육 주무관", name: "이민경", phone: "600-9832" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "유아교육 주무관", name: "윤수민", phone: "600-9833" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "유초등운영 담당", name: "김자현", phone: "600-9621" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "유초등운영 주무관", name: "김소연", phone: "600-9622" },
+                { group: "서부지원청", team: "교육지원국 유초등교육지원과", position: "유초등운영 주무관", name: "윤보영", phone: "600-9623" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "과장", name: "김순주", phone: "600-9640" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중등교육과정 장학사", name: "천행복", phone: "600-9641" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중등교육과정 장학사", name: "이미화", phone: "600-9642" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중등교육과정 장학사", name: "유수영", phone: "600-9643" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중등교육과정 주무관", name: "박희민", phone: "600-9647" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중등인사 장학사", name: "김하정", phone: "600-9644" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중등인사 장학사", name: "김유송", phone: "600-9645" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중학교배정 담당", name: "오준택", phone: "600-9651" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중학교배정 주무관", name: "윤준호", phone: "600-9652" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중학교배정 주무관", name: "김한결", phone: "600-9653" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중학교배정 실무사", name: "이민지", phone: "600-9654" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "중학교배정 사회복무요원", name: "최태양", phone: "600-9655" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터 장학사", name: "박은정", phone: "600-9631" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "나혜림", phone: "600-9632" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "민정원", phone: "600-9633" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "하민주", phone: "600-9634" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "이재훈", phone: "600-9635" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "김유경", phone: "600-9636" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "주지혜", phone: "600-9637" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "이진희", phone: "600-9638" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "장원", phone: "600-9639" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "조영현", phone: "600-9625" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "이효정", phone: "600-9626" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "임현지", phone: "600-9627" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  사회복지사", name: "오혜림", phone: "600-9628" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  행정보조", name: "한성욱", phone: "600-9629" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "신혜민", phone: "600-9834" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "노주아", phone: "600-9835" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "고지형", phone: "600-9836" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "김마리아", phone: "600-9837" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "우하늘", phone: "600-9838" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  교사", name: "박성민", phone: "600-9839" },
+                { group: "서부지원청", team: "교육지원국 중등특수교육지원과", position: "특수교육지원센터  사회복무요원", name: "최승민", phone: "" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "과장", name: "최범태", phone: "600-9680" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 장학사", name: "김용원", phone: "600-9661" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 장학사", name: "이현석", phone: "600-9662" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 장학사", name: "박우연", phone: "600-9663" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 주무관", name: "김선영", phone: "600-9692" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 주무관", name: "김수영", phone: "600-9664" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 교사", name: "박성주", phone: "600-9698" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 교사", name: "이소라", phone: "600-9697" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 전문상담사", name: "박수경", phone: "600-9693" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 교사", name: "권푸른", phone: "600-9691" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 교사", name: "이시은", phone: "600-9695" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 전문상담사", name: "이경남", phone: "600-9696" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 교사", name: "정예린", phone: "600-9694" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "생활교육 교사", name: "정어진", phone: "600-9699" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 장학사", name: "박수복", phone: "710-1260" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 장학사", name: "강혜영", phone: "710-1261" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 장학사", name: "김동현", phone: "710-1272" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 장학사", name: "봉소라", phone: "710-1273" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 주무관", name: "강인한", phone: "710-1263" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 주무관", name: "조용진", phone: "710-1264" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 주무관", name: "이경준", phone: "710-1274" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 주무관", name: "정지은", phone: "710-1275" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 실무사", name: "박정현", phone: "710-1265" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 실무사", name: "김이안", phone: "710-1262" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 실무사", name: "김은경", phone: "710-1276" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "학교폭력심의 실무사", name: "윤미정", phone: "710-1266" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "체육보건교육 장학사", name: "김치환", phone: "600-9671" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "체육보건교육 주무관", name: "구영록", phone: "600-9674" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "체육보건교육 주무관", name: "김진영", phone: "600-9675" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "체육보건교육 시설관리실무사", name: "김대중", phone: "943-1693" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "체험학습운영 담당", name: "김병철", phone: "600-9681" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "체험학습운영 주무관", name: "이숙경", phone: "600-9682" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "체험학습운영 주무관", name: "김수현", phone: "600-9683" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "서부Wee센터 전문상담교사", name: "김인영", phone: "600-9811" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "서부Wee센터 전문상담교사", name: "노소민", phone: "600-9812" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "서부Wee센터 전문상담사", name: "김숙현", phone: "600-9813" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "서부Wee센터 전문상담사", name: "유예진", phone: "600-9814" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "서부Wee센터 전문상담사", name: "기영순", phone: "600-9815" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "광산Wee센터 전문상담교사", name: "송재성", phone: "974-0130" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "광산Wee센터 전문상담교사", name: "권주연", phone: "974-0078" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "광산Wee센터 전문상담사", name: "전혜린", phone: "974-0078" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "광산Wee센터 전문상담사", name: "임주희", phone: "974-0078" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "광산Wee센터 전문상담사", name: "최수경", phone: "974-0135" },
+                { group: "서부지원청", team: "교육지원국 체육인성교육지원과", position: "광산Wee센터 전문상담사", name: "김진", phone: "974-0135" },
+                { group: "서부지원청", team: "행정지원국", position: "국장", name: "양규현", phone: "600-9705" },
+                { group: "서부지원청", team: "행정지원국", position: "부속실 주무관", name: "장지수", phone: "600-9708" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "과장", name: "정정례", phone: "600-9710" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "총무 담당", name: "하영진", phone: "600-9711" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "양희연", phone: "600-9712" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "조오형", phone: "600-9713" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "박명준", phone: "600-9715" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "이소현", phone: "600-9717" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "총무 주무관", name: "이슬희", phone: "600-9716" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "총무 사회복무요원", name: "김정호", phone: "600-9718" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "예산학급배정 담당", name: "이인숙", phone: "600-9721" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "황수현", phone: "600-9722" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "심선혜", phone: "600-9723" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "정성은", phone: "600-9725" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "하은혜", phone: "600-9724" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "예산학급재정 주무관", name: "공지나", phone: "600-9727" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "차량 운전", name: "최호영", phone: "600-9719" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "청사관리 시설관리", name: "이대건", phone: "600-9802" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "청사관리 환경관리", name: "문준식", phone: "" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "청사관리 환경관리", name: "김희순", phone: "" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "청사관리 환경관리", name: "손봉순", phone: "" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "기계실 대체", name: "임기택", phone: "600-9807" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "문서실 사회복무요원", name: "김정호", phone: "600-9801" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "계약 담당", name: "손혜경", phone: "600-9731" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "김미경", phone: "600-9732" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "이기옥", phone: "600-9733" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "조수미", phone: "600-9734" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "김하린", phone: "600-9736" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "민승현", phone: "600-9737" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "계약 주무관", name: "강경은", phone: "600-9735" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "감사 담당", name: "백정옥", phone: "600-9881" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "감사 주무관", name: "양금옥", phone: "600-9882" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "감사 주무관", name: "서준형", phone: "600-9883" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "감사 주무관", name: "김영보", phone: "600-9884" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "기록정보 담당", name: "정운규", phone: "600-9714" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "기록정보 기록연구사", name: "이현혜", phone: "600-9743" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "기록정보 주무관", name: "이연하", phone: "600-9744" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "기록정보 주무관", name: "문미란", phone: "600-9742" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "기록정보 사회복무요원", name: "이정민", phone: "600-9745" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "구내식당 조리사", name: "김희자", phone: "600-9800" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "구내식당 조리원", name: "위정숙", phone: "600-9800" },
+                { group: "서부지원청", team: "행정지원국 행정지원과", position: "구내식당 조리원", name: "이승희", phone: "600-9800" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "과장", name: "김두석", phone: "600-9750" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 담당", name: "정수환", phone: "600-9751" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 주무관", name: "김형숙", phone: "600-9752" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 주무관", name: "김태민", phone: "600-9754" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 주무관", name: "양예진", phone: "600-9755" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "평생교육행정 주무관", name: "서시온", phone: "600-9756" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "평생교육지도 담당", name: "이종식", phone: "600-9761" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "평생교육지도 주무관", name: "김명애", phone: "600-9762" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "평생교육지도 주무관", name: "심영보", phone: "600-9763" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "평생교육지도 주무관", name: "윤종일", phone: "600-9764" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 담당", name: "이유성", phone: "600-9771" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 주무관", name: "주혜미", phone: "600-9772" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 주무관", name: "양성아", phone: "600-9774" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 주무관", name: "서하은", phone: "600-9773" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 주무관", name: "안지호", phone: "600-9776" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "복지환경 교육복지사", name: "김정현", phone: "600-9775" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 담당", name: "최태근", phone: "600-9821" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "조해영", phone: "600-9282" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "김하정", phone: "600-9823" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "차은영", phone: "600-9825" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "이수진", phone: "600-9824" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "김지혜", phone: "600-9826" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "김유나", phone: "600-9827" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "나원준", phone: "600-9828" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 주무관", name: "이유정", phone: "600-9289" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 순회교사", name: "정현지", phone: "600-9830" },
+                { group: "서부지원청", team: "행정지원국 평생교육복지과", position: "급식 순회교사", name: "위승민", phone: "600-9847" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "과장", name: "김정소", phone: "600-9780" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설 담당", name: "조승용", phone: "600-9781" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "서정수", phone: "600-9782" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "나영일", phone: "600-9783" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "이화진", phone: "600-9785" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "김수준", phone: "600-9784" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "정혜원", phone: "600-9787" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설 주무관", name: "유선희", phone: "600-9788" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 담당", name: "김영현", phone: "600-9791" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "박현진", phone: "600-9793" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "양대철", phone: "600-9792" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "박우성", phone: "600-9797" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "정상용", phone: "600-9795" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "김형민", phone: "600-9796" },
+                { group: "서부지원청", team: "행정지원국 학교시설지원과", position: "시설지원 주무관", name: "박건우", phone: "600-9794" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "센터장", name: "김영순", phone: "600-9850" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 담당", name: "박소희", phone: "600-9851" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "선승민", phone: "600-9852" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "김유미", phone: "600-9853" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "류소연", phone: "600-9855" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "김용현", phone: "600-9857" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "김이삭", phone: "600-9854" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교육활동지원 주무관", name: "차지연", phone: "600-9856" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교권법무 장학사", name: "양종철", phone: "600-9861" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교권법무 장학사", name: "이정인", phone: "600-9891" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교권법무 변호사", name: "정은혜", phone: "600-9862" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교권법무 전문상담사", name: "이재숙", phone: "600-9864" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교권법무 주무관", name: "이수민", phone: "600-9865" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "교권법무 주무관", name: "오주현", phone: "600-9892" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 담당", name: "이기우", phone: "600-9871" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "유재선", phone: "600-9872" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "김현호", phone: "600-9874" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "박주현", phone: "600-9876" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "장준영", phone: "600-9877" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "김진우", phone: "600-9875" },
+                { group: "서부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "이현재", phone: "600-9873" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "센터장", name: "강신철", phone: "616-9501" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산평생교육지원 담당", name: "고명한", phone: "616-9511" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산평생교육지원 주무관", name: "김희정", phone: "616-9512" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산평생교육지원 주무관", name: "이제국", phone: "616-9513" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산평생교육지원 주무관", name: "김병재", phone: "616-9514" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산평생교육지원 주무관", name: "이의정", phone: "616-9515" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산평생교육지원 주무관", name: "김건", phone: "616-9516" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산국제교육지원 담당", name: "", phone: "" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산국제교육지원 주무관", name: "송민아", phone: "616-9522" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산국제교육지원 주무관", name: "이현진", phone: "616-9523" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산국제교육지원 주무관", name: "윤상빈", phone: "616-9524" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산유치원지원 담당", name: "류인우", phone: "616-9531" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산유치원지원 주무관", name: "박성현", phone: "616-9532" },
+                { group: "서부지원청", team: "광산교육지원센터", position: "광산유치원지원 주무관", name: "송이", phone: "616-9533" },
 
                 // 직속기관
                 { group: "직속기관", team: "창의융합교육원", position: "원장", name: "임미옥", phone: "220-9702" },
@@ -767,21 +1094,20 @@
             // --- 데이터 처리 로직 ---
             const specialGroupsForPrefix = ["교육감", "부교육감", "정책국", "교육국", "행정국"];
             staffData.forEach(person => {
-                // 서부지원청 교육장 전화번호 수정 (가장 구체적인 규칙)
-                if (person.group === '지원청' && person.team === '서부지원청' && person.position === '교육장') {
-                    person.phone = '062-600-9600';
-                }
-                // 4자리 번호 처리 (기존 로직)
-                else if (specialGroupsForPrefix.includes(person.group) && /^\d{4}$/.test(person.phone)) {
-                    person.phone = `062-380-${person.phone}`;
-                }
-                // 8자리 번호 처리 (e.g., xxx-xxxx)
-                else if (person.phone && person.phone.length === 8 && person.phone.includes('-')) {
-                    person.phone = `062-${person.phone}`;
-                }
-                // '061)' -> '061-' 변환
-                else if (person.phone && person.phone.startsWith('061)')) {
-                    person.phone = person.phone.replace('061)', '061-');
+                // 전화번호가 있는 경우에만 처리
+                if (person.phone) {
+                    // 4자리 번호 처리
+                    if (specialGroupsForPrefix.includes(person.group) && /^\d{4}$/.test(person.phone)) {
+                        person.phone = `062-380-${person.phone}`;
+                    }
+                    // 8자리 번호 처리 (e.g., xxx-xxxx)
+                    else if (person.phone.length === 8 && person.phone.includes('-')) {
+                        person.phone = `062-${person.phone}`;
+                    }
+                    // '061)' -> '061-' 변환
+                    else if (person.phone.startsWith('061)')) {
+                        person.phone = person.phone.replace('061)', '061-');
+                    }
                 }
             });
 
@@ -821,7 +1147,7 @@
             });
 
             // 2. UI 빌드
-            const groupOrder = ["교육감", "부교육감", "정책국", "교육국", "행정국", "지원청", "직속기관", "광주광역시의회", "대학협력"];
+            const groupOrder = ["교육감", "부교육감", "정책국", "교육국", "행정국", "동부지원청", "서부지원청", "직속기관", "광주광역시의회", "대학협력"];
             const specialGroups = ["교육감", "부교육감", "정책국", "교육국", "행정국"];
 
             // Helper to create table for members
@@ -1006,10 +1332,7 @@
                     targetSection.classList.remove('hidden');
                 }
             });
-        }
-
-        // 페이지의 모든 리소스가 로드된 후 스크립트 실행
-        window.onload = initializeApp;
+        });
     </script>
 
 </body>
