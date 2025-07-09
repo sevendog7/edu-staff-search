@@ -45,7 +45,32 @@
     <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
         <header class="text-center mb-8">
             <h1 class="text-3xl sm:text-4xl font-bold text-blue-800">광주광역시교육청 직원 검색(2025.7.1. 직원일람표 기준)</h1>
-            <p class="text-gray-600 mt-2">[2025.7.7. STmade] 이름으로 직원을 검색(1글자 이상 입력)하거나 그룹을 선택하여 명단을 확인하세요. (본청, 지원청은 전 직원 - 직속기관은 과장 이상 검색 가능) 휴대전화에서 전화번호를 터치하면 통화로 연결됩니다.</p>
+            <p class="text-gray-600 mt-2">[2025.7.7. STmade] 이름으로 직원을 검색(1글자 이상 입력)하거나 그룹을 선택하여 명단을 확인하세요. 휴대전화에서 전화번호를 터치하면 통화로 연결됩니다.</p>
+            
+            <!-- 조직도 링크 버튼 (수정됨) -->
+            <div class="mt-6 flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4">
+                <a href="https://www.gen.go.kr/sub/page.php?page_code=introduce_06_02" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-blue-100 text-blue-800 font-semibold py-3 px-5 rounded-lg hover:bg-blue-200 transition-colors duration-300 shadow-sm text-base w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M11 3a1 1 0 10-2 0v1.586l-3.293-3.293a1 1 0 10-1.414 1.414L6.586 5H5a1 1 0 00-1 1v2a1 1 0 001 1h1.586l-2.293 2.293a1 1 0 101.414 1.414L8 9.414V12a1 1 0 102 0V9.414l2.293 2.293a1 1 0 001.414-1.414L11.414 8H13a1 1 0 001-1V5a1 1 0 00-1-1h-1.586l2.293-2.293a1 1 0 10-1.414-1.414L11 3.586V3z"></path>
+                        <path d="M3 14a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"></path>
+                    </svg>
+                    <span>광주광역시교육청 조직도</span>
+                </a>
+                <a href="https://dongbu.gen.go.kr/page.php?id=115" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-teal-100 text-teal-800 font-semibold py-3 px-5 rounded-lg hover:bg-teal-200 transition-colors duration-300 shadow-sm text-base w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M11 3a1 1 0 10-2 0v1.586l-3.293-3.293a1 1 0 10-1.414 1.414L6.586 5H5a1 1 0 00-1 1v2a1 1 0 001 1h1.586l-2.293 2.293a1 1 0 101.414 1.414L8 9.414V12a1 1 0 102 0V9.414l2.293 2.293a1 1 0 001.414-1.414L11.414 8H13a1 1 0 001-1V5a1 1 0 00-1-1h-1.586l2.293-2.293a1 1 0 10-1.414-1.414L11 3.586V3z"></path>
+                        <path d="M3 14a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"></path>
+                    </svg>
+                    <span>동부교육지원청 조직도</span>
+                </a>
+                <a href="https://seobu.gen.go.kr/page.php?id=116" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 font-semibold py-3 px-5 rounded-lg hover:bg-indigo-200 transition-colors duration-300 shadow-sm text-base w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M11 3a1 1 0 10-2 0v1.586l-3.293-3.293a1 1 0 10-1.414 1.414L6.586 5H5a1 1 0 00-1 1v2a1 1 0 001 1h1.586l-2.293 2.293a1 1 0 101.414 1.414L8 9.414V12a1 1 0 102 0V9.414l2.293 2.293a1 1 0 001.414-1.414L11.414 8H13a1 1 0 001-1V5a1 1 0 00-1-1h-1.586l2.293-2.293a1 1 0 10-1.414-1.414L11 3.586V3z"></path>
+                        <path d="M3 14a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"></path>
+                    </svg>
+                    <span>서부교육지원청 조직도</span>
+                </a>
+            </div>
         </header>
 
         <!-- 이름으로 검색 섹션 -->
@@ -1068,6 +1093,7 @@
                 { group: "직속기관", team: "시민협치진흥원", position: "지역교육협력과장", name: "윤은숙", phone: "712-6740" },
                 { group: "직속기관", team: "시민협치진흥원", position: "학부모참여과장", name: "윤현정", phone: "712-6770" },
 
+
                 // 광주광역시의회
                 { group: "광주광역시의회", team: "교육문화전문위원실", position: "전문위원", name: "김종오", phone: "613-5410" },
                 { group: "광주광역시의회", team: "교육문화전문위원실", position: "주무관", name: "박동현", phone: "613-5412" },
@@ -1089,6 +1115,7 @@
                 { group: "대학협력", team: "교육대 교육협력관실", position: "교육협력관", name: "이정화", phone: "520-4402" },
                 { group: "대학협력", team: "교육대 교육협력관실", position: "주무관", name: "임수미", phone: "520-4403" },
                 { group: "대학협력", team: "교육대 교육협력관실", position: "주무관", name: "김서윤", phone: "520-4404" }
+
             ];
 
             // --- 데이터 처리 로직 ---
