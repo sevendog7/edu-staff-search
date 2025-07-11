@@ -45,33 +45,35 @@
     <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
         <header class="text-center mb-8">
             <h1 class="text-3xl sm:text-4xl font-bold text-blue-800">광주광역시교육청 직원 검색</h1>
-            <p class="text-gray-600 mt-2">('25.7.1.기준)이름으로 직원을 검색(1글자 이상 입력)하거나 그룹을 선택하여 명단을 확인하세요. 휴대전화에서 전화번호를 터치하면 통화로 연결됩니다. [byST]</p>
+            <!-- 설명 문구 수정 -->
+            <p class="text-gray-600 mt-2">('25.7.1.기준) 이름, 부서, 직책으로 직원을 검색(1글자 이상 입력)하거나 그룹을 선택하여 명단을 확인하세요. 휴대전화에서 전화번호를 터치하면 통화로 연결됩니다. [byST]</p>
             
-            <!-- 조직도 링크 버튼 (수정됨) -->
-<div class="mt-6 flex flex-nowrap overflow-x-auto justify-start items-center gap-4">
-    <a href="https://www.gen.go.kr/sub/page.php?page_code=introduce_06_02" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-blue-50 text-blue-800 font-semibold py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors duration-300 shadow-sm text-sm">
-        <span>본청</span>
-    </a>
-    <a href="https://dongbu.gen.go.kr/page.php?id=115" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-teal-50 text-teal-800 font-semibold py-2 px-4 rounded-lg hover:bg-teal-200 transition-colors duration-300 shadow-sm text-sm">
-        <span>동부</span>
-    </a>
-    <a href="https://seobu.gen.go.kr/page.php?id=116" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-indigo-50 text-indigo-800 font-semibold py-2 px-4 rounded-lg hover:bg-indigo-200 transition-colors duration-300 shadow-sm text-sm">
-        <span>서부</span>
-    </a>
-    <a href="https://www.moe.go.kr/sub/infoRenewal.do?m=0604&page=0604&s=moe" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-teal-50 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-300 shadow-sm text-sm">
-        <span>교육부</span>
-    </a>
-        <a href="https://www.gwangju.go.kr/contentsView.do?pageId=www147" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-indigo-50 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-300 shadow-sm text-sm">
-        <span>시청</span>
-    </a>
-</div>
+            <!-- 조직도 링크 버튼 -->
+            <div class="mt-6 flex flex-nowrap overflow-x-auto justify-start items-center gap-4">
+                <a href="https://www.gen.go.kr/sub/page.php?page_code=introduce_06_02" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-blue-50 text-blue-800 font-semibold py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors duration-300 shadow-sm text-sm">
+                    <span>본청</span>
+                </a>
+                <a href="https://dongbu.gen.go.kr/page.php?id=115" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-teal-50 text-teal-800 font-semibold py-2 px-4 rounded-lg hover:bg-teal-200 transition-colors duration-300 shadow-sm text-sm">
+                    <span>동부</span>
+                </a>
+                <a href="https://seobu.gen.go.kr/page.php?id=116" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-indigo-50 text-indigo-800 font-semibold py-2 px-4 rounded-lg hover:bg-indigo-200 transition-colors duration-300 shadow-sm text-sm">
+                    <span>서부</span>
+                </a>
+                <a href="https://www.moe.go.kr/sub/infoRenewal.do?m=0604&page=0604&s=moe" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-teal-50 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-300 shadow-sm text-sm">
+                    <span>교육부</span>
+                </a>
+                <a href="https://www.gwangju.go.kr/contentsView.do?pageId=www147" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-indigo-50 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-300 shadow-sm text-sm">
+                    <span>시청</span>
+                </a>
+            </div>
         </header>
 
-        <!-- 이름으로 검색 섹션 -->
+        <!-- 검색 섹션 -->
         <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-700">이름으로 검색</h2>
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">직원 검색</h2>
             <div class="flex flex-col sm:flex-row gap-4">
-                <input type="text" id="searchInput" placeholder="직원 이름을 입력하세요..." class="flex-grow w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <!-- 입력창 placeholder 수정 -->
+                <input type="text" id="searchInput" placeholder="이름, 부서(팀명), 직책으로 검색하세요..." class="flex-grow w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                 <button id="searchButton" class="w-full sm:w-auto bg-blue-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-md">검색</button>
             </div>
             <div id="searchResults" class="mt-6">
@@ -260,6 +262,7 @@
                 { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "윤정", phone: "380-4279" },
                 { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "강은혜", phone: "380-4277" },
                 { group: "정책국", team: "안전총괄과", position: "학교안전공제회 직원", name: "김미연", phone: "380-4278" },
+
 
                 // 교육국
                 { group: "교육국", team: "교육국장", position: "교육국장 국장", name: "백기상", phone: "4206" },
@@ -490,6 +493,7 @@
                 { group: "교육국", team: "인성생활교육과", position: "지세움 대안생활교육지도사", name: "이자경", phone: "226-8403" },
                 { group: "교육국", team: "인성생활교육과", position: "지세움 청소보조원", name: "이승준", phone: "226-8402" },
 
+
                 // 행정국
                 { group: "행정국", team: "행정국장", position: "행정국장 국장", name: "박준수", phone: "4208" },
                 { group: "행정국", team: "행정국장", position: "부속실 주무관", name: "여채현", phone: "4208" },
@@ -655,6 +659,7 @@
                 { group: "행정국", team: "시설과", position: "미래학교복합시설 주무관", name: "최홍윤", phone: "4183" },
                 { group: "행정국", team: "시설과", position: "미래학교복합시설 주무관", name: "윤지은", phone: "4188" },
                 { group: "행정국", team: "시설과", position: "미래학교복합시설 주무관", name: "양현태", phone: "4187" },
+
 
                 // 동부지원청
                 { group: "동부지원청", team: "교육장", position: "교육장", name: "이명숙", phone: "605-5510" },
@@ -823,7 +828,9 @@
                 { group: "동부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "강효구", phone: "605-5794" },
                 { group: "동부지원청", team: "행정지원국 학교지원센터", position: "학교안전지원 주무관", name: "백준상", phone: "605-5795" },
 
+
                 // 서부지원청
+                { group: "서부지원청", team: "교육장", position: "교육장", name: "이성철", phone: "600-9600" },
                 { group: "서부지원청", team: "교육장", position: "교육장", name: "이성철", phone: "600-9600" },
                 { group: "서부지원청", team: "교육장", position: "부속실 주무관", name: "진정임", phone: "600-9608" },
                 { group: "서부지원청", team: "교육지원국", position: "국장", name: "노재춘", phone: "600-9605" },
@@ -1040,6 +1047,7 @@
                 { group: "서부지원청", team: "광산교육지원센터", position: "광산유치원지원 주무관", name: "박성현", phone: "616-9532" },
                 { group: "서부지원청", team: "광산교육지원센터", position: "광산유치원지원 주무관", name: "송이", phone: "616-9533" },
 
+
                 // 직속기관
                 { group: "직속기관", team: "창의융합교육원", position: "원장", name: "임미옥", phone: "220-9702" },
                 { group: "직속기관", team: "창의융합교육원", position: "수리과학부장", name: "김세준", phone: "220-9760" },
@@ -1109,7 +1117,6 @@
                 { group: "대학협력", team: "교육대 교육협력관실", position: "교육협력관", name: "이정화", phone: "520-4402" },
                 { group: "대학협력", team: "교육대 교육협력관실", position: "주무관", name: "임수미", phone: "520-4403" },
                 { group: "대학협력", team: "교육대 교육협력관실", position: "주무관", name: "김서윤", phone: "520-4404" }
-
             ];
 
             // --- 데이터 처리 로직 ---
@@ -1290,7 +1297,12 @@
                     searchResults.innerHTML = '<p class="text-gray-500">검색어를 입력해주세요.</p>';
                     return;
                 }
-                const results = staffData.filter(person => person.name.toLowerCase().includes(query));
+                // --- 검색 로직 수정: 이름, 부서, 직책 모두 검색 ---
+                const results = staffData.filter(person => 
+                    person.name.toLowerCase().includes(query) ||
+                    person.team.toLowerCase().includes(query) ||
+                    person.position.toLowerCase().includes(query)
+                );
 
                 searchResults.innerHTML = '';
                 if (results.length > 0) {
