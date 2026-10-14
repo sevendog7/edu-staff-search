@@ -213,7 +213,84 @@
 
   .group{
     margin-bottom:30px;
+    position:relative;
+    scroll-margin-top:16px;
   }
+  .group.flash .group-head{ animation:flash 1.2s ease; }
+  @keyframes flash{
+    0%{ background:var(--ochre-soft); }
+    100%{ background:transparent; }
+  }
+
+  /* 과 바로가기 */
+  .dept-nav{
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:14px 16px 16px;
+    margin:0 0 28px;
+    scroll-margin-top:16px;
+  }
+  .dept-nav-label{
+    font-size:12px;
+    color:var(--ochre);
+    font-weight:600;
+    margin:0 0 10px;
+  }
+  .dept-nav-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  /* 바로가기 버튼: 흰 바탕 + 황토색 왼쪽 막대 (아래 과 제목의 남색 배지와 구분) */
+  .dept-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 10px 7px 12px;
+    border:1px solid var(--line);
+    border-left:3px solid var(--ochre);
+    background:#fff;
+    color:var(--ink);
+    font-family:inherit;
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+    border-radius:0 999px 999px 0;
+    transition:border-color .15s, color .15s, background .15s;
+  }
+  .dept-chip::after{
+    content:"↓";
+    font-size:11px;
+    color:var(--ochre);
+  }
+  .dept-chip:hover{
+    border-color:var(--ochre);
+    background:var(--ochre-soft);
+    color:var(--ink);
+  }
+  .dept-chip .cnt{
+    font-size:11px;
+    font-weight:600;
+    color:var(--ochre);
+    background:var(--ochre-soft);
+    padding:1px 7px;
+    border-radius:999px;
+  }
+  .dept-chip:hover .cnt{ background:#fff; }
+  .to-top{
+    position:absolute;
+    top:4px;
+    right:0;
+    border:none;
+    background:none;
+    color:var(--ink-soft);
+    font-family:inherit;
+    font-size:12px;
+    cursor:pointer;
+    padding:4px 0;
+  }
+  .to-top ~ .group-head{ padding-right:76px; }
+  .to-top:hover{ color:var(--navy); text-decoration:underline; }
   .group-head{
     font-family:"Gowun Batang","Noto Serif KR",serif;
     font-size:18px;
@@ -223,12 +300,23 @@
     border-bottom:2px solid var(--ink);
     margin-bottom:2px;
   }
-  .group-head span{
+  .group-head{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .group-head .dept{
+    display:inline-block;
     font-family:"Pretendard",sans-serif;
-    font-weight:500;
-    font-size:13px;
-    color:var(--ink-soft);
-    margin-left:8px;
+    font-weight:700;
+    font-size:14px;
+    line-height:1.3;
+    color:#fff;
+    background:var(--navy);
+    padding:5px 12px;
+    border-radius:3px;
+    letter-spacing:-0.01em;
   }
   table{
     width:100%;
@@ -251,6 +339,23 @@
   tbody tr:last-child td{ border-bottom:1px solid var(--line); }
   tbody tr:hover td{ background:var(--panel); }
   td.team{ color:var(--ink-soft); font-size:12.5px; }
+
+  /* 팀 구분: 팀이 바뀌는 행 강조 + 팀 단위 교대 배경 */
+  tbody tr.band-alt td{ background:#fbfaf6; }
+  tbody tr.team-start:not(:first-child) td{ border-top:2px solid var(--line); }
+  tbody tr.team-start td.team{ box-shadow:inset 3px 0 0 var(--ochre); }
+  tbody tr.team-cont td.team{ box-shadow:inset 3px 0 0 var(--ochre-soft); }
+  .team-label{
+    display:inline-block;
+    padding:2px 8px;
+    background:var(--navy-soft);
+    color:var(--navy);
+    font-weight:600;
+    font-size:12px;
+    border-radius:3px;
+  }
+  .team-ditto{ color:#c9c5b8; font-size:11.5px; padding-left:8px; }
+  tbody tr:hover td{ background:var(--panel); }
   td.name{ font-weight:700; font-family:"Gowun Batang","Noto Serif KR",serif; font-size:14.5px; }
   td.title{ color:var(--ink-soft); white-space:nowrap; }
   a.tel{
@@ -1920,13 +2025,60 @@ function render(list, headingLabel){
     byDept.get(key).push(s);
   });
 
+  // 과(부서) 바로가기: 묶음이 2개 이상일 때 검색결과 상단에 과 목록 배치
+  const deptKeys = [...byDept.keys()];
+  if(deptKeys.length > 1){
+    const nav = document.createElement("div");
+    nav.className = "dept-nav";
+    const navLabel = document.createElement("p");
+    navLabel.className = "dept-nav-label";
+    navLabel.textContent = "과 바로가기";
+    nav.appendChild(navLabel);
+    const navList = document.createElement("div");
+    navList.className = "dept-nav-list";
+    deptKeys.forEach((key, i) => {
+      const r = byDept.get(key);
+      const name = (r[0].d && r[0].d !== r[0].g) ? r[0].d : r[0].g;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "dept-chip";
+      btn.innerHTML = `${esc(name)}<span class="cnt">${r.length}</span>`;
+      btn.addEventListener("click", () => {
+        const target = document.getElementById("dept-" + i);
+        if(target){
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          target.classList.remove("flash");
+          void target.offsetWidth;
+          target.classList.add("flash");
+        }
+      });
+      navList.appendChild(btn);
+    });
+    nav.appendChild(navList);
+    resultsArea.appendChild(nav);
+  }
+
+  let groupIdx = 0;
   byDept.forEach((rows, key) => {
     const groupEl = document.createElement("div");
     groupEl.className = "group";
+    groupEl.id = "dept-" + (groupIdx++);
+    if(deptKeys.length > 1){
+      const back = document.createElement("button");
+      back.type = "button";
+      back.className = "to-top";
+      back.textContent = "↑ 과 목록";
+      back.addEventListener("click", () => {
+        const nav = resultsArea.querySelector(".dept-nav");
+        if(nav) nav.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      groupEl.appendChild(back);
+    }
 
     const head = document.createElement("div");
     head.className = "group-head";
-    head.innerHTML = `${esc(rows[0].g)}<span>${(rows[0].d && rows[0].d !== rows[0].g) ? " · " + esc(rows[0].d) : ""}</span>`;
+    head.innerHTML = `<span class="org">${esc(rows[0].g)}</span>` +
+      ((rows[0].d && rows[0].d !== rows[0].g) ? `<span class="dept">${esc(rows[0].d)}</span>` : "");
     groupEl.appendChild(head);
 
     const table = document.createElement("table");
@@ -1940,14 +2092,24 @@ function render(list, headingLabel){
         </tr>
       </thead>
       <tbody>
-        ${rows.map(s => `
-          <tr>
-            <td class="team">${esc(s.t)}</td>
+        ${(() => {
+          // 팀 이름이 위 행과 달라지는 지점을 표시 (데이터는 변경하지 않음)
+          let prevTeam = null, band = 0;
+          return rows.map((s, idx) => {
+            const isStart = s.t !== prevTeam;
+            if (isStart && idx > 0) band = 1 - band;
+            prevTeam = s.t;
+            const cls = [isStart ? "team-start" : "team-cont", band ? "band-alt" : ""].join(" ").trim();
+            return `
+          <tr class="${cls}">
+            <td class="team">${isStart ? `<span class="team-label">${esc(s.t)}</span>` : `<span class="team-ditto">${esc(s.t)}</span>`}</td>
             <td class="title">${esc(s.p)}</td>
             <td class="name">${esc(s.n)}</td>
             <td>${renderPhone(s.ph)}</td>
           </tr>
-        `).join("")}
+        `;
+          }).join("");
+        })()}
       </tbody>
     `;
     groupEl.appendChild(table);
