@@ -2153,6 +2153,7 @@ AI연구부장/윤은숙/519-0470
   main.addEventListener('click',e=>{
     const b=e.target.closest('.p[data-i]'); if(!b||b.disabled) return;
     const p=people[+b.dataset.i]; const who=esc(p.name||p.title);
+    const dial=p.num.replace(/\D/g,''); if(/^0\d{8,10}$/.test(dial) && matchMedia('(hover:none) and (pointer:coarse)').matches){ location.href='tel:'+dial; return; }
     const done=()=>show(`${who} <b>${esc(p.num)}</b> 복사됨`);
     const fallback=()=>{ const r=document.createRange(); r.selectNodeContents(b.querySelector('.p-num')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); show(`${who} 번호를 선택했습니다. Ctrl+C로 복사하세요`); };
     try{ navigator.clipboard.writeText(p.num).then(done,fallback); }catch(err){ fallback(); }
